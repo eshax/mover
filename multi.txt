@@ -1,0 +1,70 @@
+
+
+        [swtc/cnyt]                            ask                             bid
+                           0.005510(159818.535391)         0.005480(201353.000000)
+
+        [eth/cnyt]                             ask                             bid
+                             1277.000000(0.120000)           1160.000000(0.121577)
+
+        [swtc/eth]                             ask                             bid
+                            0.000005(26566.000000)          0.000004(69554.000000)
+                            
+
+cnyt        eth     swtc
+1000.00     0       0
+
+
+route 1
+cnyt > eth > swtc > cnyt
+
+    1. 
+    [eth/cnyt] buy eth(0.1)
+    
+    cnyt > eth 
+
+                cnyt        eth     swtc
+                872.3       0.1     0
+
+    2. 
+    [swtc/eth] buy swtc(20000)
+    
+    eth > swtc
+
+                cnyt        eth     swtc
+                872.3       0       20000
+
+    3. 
+    [swtc/cnyt] sell swtc(20000)
+    
+    swtc > cnyt
+
+                cnyt        eth     swtc
+                981.9       0       0
+
+
+route 2
+cnyt > swtc > eth > cnyt
+
+    1. 
+    [swtc/cnyt] buy swtc(20000)
+    
+    cnyt > swtc
+
+                cnyt        eth     swtc
+                889.8       0       20000
+
+    2. 
+    [swtc/eth] sell swtc(20000)
+    
+    swtc > eth
+
+                cnyt        eth     swtc
+                889.8       0.08     0
+
+    3. 
+    [eth/cnyt] sell eth(0.1)
+    
+    eth > cnyt 
+
+                cnyt        eth     swtc
+                982.6      0       0
