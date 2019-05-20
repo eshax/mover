@@ -128,21 +128,42 @@ class jccdex:
     '''
 
     @staticmethod
-    def order():
+    def order(type, symbol, price, amount):
+
+        # 交易币种
+        symbols = jccdex.get_symbol(symbol)
+        symbols = symbols.split('-')
+
+        # 交易类型
+        if type.lower() == 'buy':
+            # buy 买
+            flags = 0
+            gets_cny = symbols[1]
+            pays_cny = symbols[0]
+            gets_val = price * amount
+            pays_val = amount
+        else:
+            # sell 卖
+            flags = 524288
+            gets_cny = symbols[0]
+            pays_cny = symbols[1]
+            gets_val = amount
+            pays_val = price * amount
+
 
         o = {
-            "Flags": 0,
+            "Flags": flags,
             "Fee": 0.00001,
             "Account": jccdex.account_key,
             "TransactionType": 'OfferCreate',
             "TakerGets": {
-                "value": 0.005,
-                "currency": 'CNY',
+                "value": gets_val,
+                "currency": gets_cny,
                 "issuer": 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or'
             },
             "TakerPays": {
-                "value": 1,
-                "currency": 'SWT',
+                "value": pays_val,
+                "currency": pays_cny,
                 "issuer": "jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or"
             }
         }
@@ -171,7 +192,11 @@ class jccdex:
         js = json.loads(r.content)
         print(js.get('msg'))
 
-        return js.get("hash")
+        if 'data' in js:
+            hash = js.get('data').get('hash')
+            return hash
+        else:
+            return ''
 
 
     '''
@@ -238,7 +263,11 @@ if __name__ == "__main__":
         # js = jccdex.get_tx()
         # print js
 
-        hash = jccdex.order()
+        # buy
+        #hash = jccdex.order('buy', 'swtc/cnyt', 0.0005, 1)
+        # sell
+        hash = jccdex.order('sell', 'swtc/cnyt', 0.007, 10)
         print (hash)
+        print ()
 
         break
