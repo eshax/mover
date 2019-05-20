@@ -33,7 +33,7 @@ class plan:
         # 建议单次搬砖交易量
         amount = max_amount * 0.5
 
-        o = {1
+        o = {
             "time": time.strftime("%Y-%m-%d %H:%M:%S"),
             "type": "bilateral",
             "dex": "%s/%s" % (ask_dex, bid_dex),
