@@ -46,8 +46,8 @@ class plan:
             ]
         }
 
-        mdb.mover.plan.insert(o)
         rdb.lpush('bilateral', json.dumps(o, ensure_ascii=False))
+        mdb.mover.plan.insert(o)
 
 
     '''
@@ -146,11 +146,11 @@ class plan:
 
         }
 
-        mdb.mover.plan.insert(o)
-
-        #if ratio > 0.0:
         if types[0] in ['buy']:
             rdb.lpush('triangle', json.dumps(o, ensure_ascii=False))
+
+        mdb.mover.plan.insert(o)
+
 
 
 
