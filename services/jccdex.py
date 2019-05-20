@@ -162,6 +162,9 @@ class jccdex:
 
         url = jccdex.ex_api + '/exchange/sign_order'
 
+        data = {}
+        data['sign'] = blob
+
         r = requests.post(url, data=data)
         print(r.content)
 
