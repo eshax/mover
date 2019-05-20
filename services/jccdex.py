@@ -35,8 +35,6 @@ class jccdex:
 
     info_api    = 'https://i3b44eb75ef.jccdex.cn'
     ex_api      = 'https://ewdjbbl8jgf.jccdex.cn'
-    account_key = 'jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3'
-
 
     '''
     查询 api
@@ -124,15 +122,38 @@ class jccdex:
 
 
     '''
+    查询委托
+    '''
+
+    @staticmethod
+    def query():
+        url = jccdex.ex_api + '/exchange/orders/%s/1' % account
+        code, js = http.get(url)
+        if code == 200:
+            js = json.loads(js)
+            print (js)
+            return js.get('data')
+
+
+    '''
     挂单
     '''
 
     @staticmethod
     def order(type, symbol, price, amount):
 
+        """
+        type:    交易类型  buy(买),  sell(卖)
+        symbol:  统一的货币对 (swtc/cnyt)
+        price:   交易金额
+        amount:  交易数量
+        """
+
         # 交易币种
         symbols = jccdex.get_symbol(symbol)
         symbols = symbols.split('-')
+
+        sequence = jccdex.get_sequence()
 
         # 交易类型
         if type.lower() == 'buy':
@@ -150,11 +171,10 @@ class jccdex:
             gets_val = amount
             pays_val = price * amount
 
-
         o = {
             "Flags": flags,
             "Fee": 0.00001,
-            "Account": jccdex.account_key,
+            "Account": account,
             "TransactionType": 'OfferCreate',
             "TakerGets": {
                 "value": gets_val,
@@ -170,7 +190,7 @@ class jccdex:
 
         w = Wallet(secret)
 
-        o['Sequence'] = jccdex.get_sequence()
+        o['Sequence'] = sequence
         o['SigningPubKey'] = w.get_public_key()
         prefix = 0x53545800
         serial = Serializer(None)
@@ -194,9 +214,50 @@ class jccdex:
 
         if 'data' in js:
             hash = js.get('data').get('hash')
-            return hash
+            return sequence
         else:
             return ''
+
+
+    '''
+    撤单
+    '''
+
+    @staticmethod
+    def cancel_order(sequence):
+
+        o = {
+            "Flags": 0,
+            "Fee": 0.00001,
+            "Account": account,
+            "TransactionType": 'OfferCancel',
+            "OfferSequence": sequence
+        }
+
+        w = Wallet(secret)
+
+        o['Sequence'] = jccdex.get_sequence()
+        o['SigningPubKey'] = w.get_public_key()
+        prefix = 0x53545800
+        serial = Serializer(None)
+        hash = serial.from_json(o).hash(prefix)
+        o['TxnSignature'] = w.sign(hash)
+
+        print(o)
+        blob = serial.from_json(o).to_hex()
+        print(blob)
+
+        url = jccdex.ex_api + '/exchange/sign_cancel_order'
+
+        data = {}
+        data['sign'] = blob
+
+        r = requests.delete(url, data=data)
+        print(r.content)
+
+        js = json.loads(r.content)
+        print(js.get('msg'))
+
 
 
     '''
@@ -263,11 +324,19 @@ if __name__ == "__main__":
         # js = jccdex.get_tx()
         # print js
 
+        # order...
         # buy
         #hash = jccdex.order('buy', 'swtc/cnyt', 0.0005, 1)
         # sell
-        hash = jccdex.order('sell', 'swtc/cnyt', 0.007, 10)
-        print (hash)
-        print ()
+        # hash = jccdex.order('sell', 'swtc/cnyt', 0.007, 10)
+        # print (hash)
+
+        ## query...
+        for o in jccdex.query():
+            print (o)
+
+
+        ## cancel order...
+        #jccdex.cancel_order(61)
 
         break
