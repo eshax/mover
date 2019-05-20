@@ -12,8 +12,8 @@ from services.huobi import huobi
 
 import prettytable as pt
 
-#mdb = pymongo.MongoClient('127.0.0.1', 27017)
-#rdb = redis.Redis(host='127.0.0.1', port=6379, db=0)
+mdb = pymongo.MongoClient('127.0.0.1', 27017)
+rdb = redis.Redis(host='127.0.0.1', port=6379, db=0)
 
 class plan:
 
@@ -33,7 +33,7 @@ class plan:
         # 建议单次搬砖交易量
         amount = max_amount * 0.5
 
-        o = {
+        o = {1
             "time": time.strftime("%Y-%m-%d %H:%M:%S"),
             "type": "bilateral",
             "dex": "%s/%s" % (ask_dex, bid_dex),
@@ -46,7 +46,8 @@ class plan:
             ]
         }
 
-        #mdb.mover.plan.insert(o)
+        mdb.mover.plan.insert(o)
+        rdb.lpush('bilateral', json.dumps(o, ensure_ascii=False))
 
 
     '''
@@ -145,7 +146,11 @@ class plan:
 
         }
 
-        #mdb.mover.plan.insert(o)
+        mdb.mover.plan.insert(o)
+
+        #if ratio > 0.0:
+        if types[0] in ['buy']:
+            rdb.lpush('triangle', json.dumps(o, ensure_ascii=False))
 
 
 
