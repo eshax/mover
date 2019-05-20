@@ -14,10 +14,10 @@ class md5:
         m1.update(str.encode('utf-8'))
         token = m1.hexdigest()
         return token
-        
-        
+
+
 if __name__ == "__main__":
 
     pass
 
-    print md5.encode("123456")
+    print (md5.encode("123456"))

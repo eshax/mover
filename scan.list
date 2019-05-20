@@ -1,22 +1,22 @@
 
 [coinw:jccdex]
-coinw:jccdex,moac/cnyt
-coinw:jccdex,eth/cnyt
-coinw:jccdex,swtc/cnyt
+#coinw:jccdex,moac/cnyt
+#coinw:jccdex,eth/cnyt
+#coinw:jccdex,swtc/cnyt
 
 [coinw:huobi]
-coinw:huobi,eth/usdt
-coinw:huobi,btc/usdt
-coinw:huobi,ltc/usdt
-coinw:huobi,eos/usdt
+#coinw:huobi,eth/usdt
+#coinw:huobi,btc/usdt
+#coinw:huobi,ltc/usdt
+#coinw:huobi,eos/usdt
 
 [jccdex]
 jccdex,swtc/eth/cnyt
 
 [coinw]
-coinw,btc/usdt/cnyt
-coinw,eth/usdt/cnyt
-coinw,ltc/usdt/cnyt
-coinw,eos/usdt/cnyt
-coinw,xrp/usdt/cnyt
-coinw,bchabc/usdt/cnyt
+#coinw,btc/usdt/cnyt
+#coinw,eth/usdt/cnyt
+#coinw,ltc/usdt/cnyt
+#coinw,eos/usdt/cnyt
+#coinw,xrp/usdt/cnyt
+#coinw,bchabc/usdt/cnyt

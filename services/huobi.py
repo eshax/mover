@@ -6,7 +6,6 @@ import hashlib
 import hmac
 import json
 import urllib
-import urllib2
 import requests
 
 ACCESS_KEY = "c663ff43-ecbd2ab6-0cf99e68-12cf0"
@@ -28,9 +27,9 @@ class huobi:
             headers.update(add_to_headers)
         try:
             postdata = urllib.urlencode(params)
-            response = requests.get(url, postdata, headers=headers, timeout=5) 
+            response = requests.get(url, postdata, headers=headers, timeout=5)
             try:
-                
+
                 if response.status_code == 200:
                     return response.json()
                 else:
@@ -53,7 +52,7 @@ class huobi:
         postdata = json.dumps(params)
         response = requests.post(url, postdata, headers=headers, timeout=10)
         try:
-            
+
             if response.status_code == 200:
                 return response.json()
             else:
@@ -92,7 +91,7 @@ class huobi:
         host_url = TRADE_URL
 
         params_to_sign['Signature'] = huobi.createSign(params_to_sign, method, 'api.huobi.pro', request_path, SECRET_KEY)
-        
+
         url = host_url + request_path + '?' + urllib.urlencode(params_to_sign)
         return huobi.http_post_request(url, params)
 
@@ -121,11 +120,11 @@ class huobi:
         """
         depth = {"symbol": symbol, "bids": [], "asks": []}
         js = {}
-        
+
         params = {'symbol': huobi.get_symbol(symbol),
                   'type': type}
-        
-        
+
+
         url = MARKET_URL + '/market/depth'
 
         try:
@@ -142,7 +141,7 @@ class huobi:
                     depth['asks'].append({ 'price': float(a[0]), 'amount': float(a[1]) })
         except:
             pass
-            
+
         return depth, js
 
 
@@ -170,7 +169,7 @@ class huobi:
 if __name__ == '__main__':
 
     js = huobi.get_symbols()
-    
+
     for o in js['data']:
         if 'eth' in o['symbol']:
             #print o['symbol']
@@ -178,6 +177,4 @@ if __name__ == '__main__':
 
 
     js, _ = huobi.get_depth('eth/usdt', 'step0')
-    print js
-
-
+    print (js)
