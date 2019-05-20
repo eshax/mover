@@ -160,11 +160,15 @@ class jccdex:
         blob = serial.from_json(o).to_hex()
         print(blob)
 
-        url = jccdex.api + '/exchange/sign_order'
+        url = jccdex.ex_api + '/exchange/sign_order'
 
         r = requests.post(url, data=data)
         print(r.content)
-        print(json.loads(r.content).get('msg'))
+
+        js = json.loads(r.content)
+        print(js.get('msg'))
+
+        return js.get("hash")
 
 
     '''
@@ -222,17 +226,16 @@ if __name__ == "__main__":
 
         time.sleep(1)
 
-        o, _ = jccdex.get_depth('eth/cnyt')
-        print (o)
+        # o, _ = jccdex.get_depth('eth/cnyt')
+        # print (o)
 
-        js = jccdex.get_balances()
-        print (js)
+        # js = jccdex.get_balances()
+        # print (js)
 
         # js = jccdex.get_tx()
         # print js
 
-        #jccdex.order()
-
-        print
+        hash = jccdex.order()
+        print (hash)
 
         break
