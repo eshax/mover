@@ -144,6 +144,19 @@ class huobi:
 
         return depth, js
 
+    @staticmethod
+    def get_account():
+        params = {}
+        path = '/v1/account/accounts'
+
+        try:
+            js = huobi.api_key_get(params, path)
+            print(js)
+        except:
+            pass
+
+        # return js 
+
 
     @staticmethod
     def get_symbol(symbol):

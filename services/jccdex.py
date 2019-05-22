@@ -1,6 +1,6 @@
 ﻿# -*- coding:utf-8 -*-
 
-import os, sys, time, json, binascii, requests
+import os, sys, time, json, binascii, requests, random
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -27,14 +27,35 @@ sdk:
 
 '''
 
-account = "jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3"
-secret  = "ssbczL7WYpmG1mP1xPZsjDkWi6J6H"
-
 class jccdex:
 
+    api = {
+        "exHosts": ["ewdjbbl8jgf.jccdex.cn",
+                    "e5e9637c2fa.jccdex.cn",
+                    "e9joixcvsdvi4sf.jccdex.cn",
+                    "eaf28bebdff.jccdex.cn",
+                    "ejid19dcf155a0.jccdex.cn",
+                    "ejii363fa7e9a6.jccdex.cn",
+                    "ejin22b16fbe3e.jccdex.cn",
+                    "ejio68dd7d047f.jccdex.cn"],
+        "infoHosts": [
+                    "i3b44eb75ef.jccdex.cn",
+                    "i059e8792d5.jccdex.cn",
+                    "i352fb2ef56.jccdex.cn",
+                    "ib149d5a1e5.jccdex.cn",
+                    "i8c0429aaeb.jccdex.cn",
+                    "i33a177bdf2.jccdex.cn",
+                    "i1ff1c92a2f.jccdex.cn",
+                    "iujhg293cabc.jccdex.cn",
+                    "iujh6753cabc.jccdex.cn",
+                    "ikj98kyq754c.jccdex.cn",
+                    "il8hn7hcgyxk.jccdex.cn"]
+    }
 
-    info_api    = 'https://i3b44eb75ef.jccdex.cn'
     ex_api      = 'https://ewdjbbl8jgf.jccdex.cn'
+    account = "jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3"
+    secret  = "ssbczL7WYpmG1mP1xPZsjDkWi6J6H"
+
 
     '''
     查询 api
@@ -43,7 +64,7 @@ class jccdex:
     @staticmethod
     def info(url):
 
-        url = jccdex.info_api + url
+        url = 'https://' + random.choice(jccdex.api['infoHosts']) + url
 
         code, content = http.get(url)
 
@@ -58,7 +79,7 @@ class jccdex:
     @staticmethod
     def exchange(url, data=None):
 
-        url = jccdex.ex_api + url
+        url = 'https://' + random.choice(jccdex.api['exHosts']) + url
 
         if data:
             code, content = http.post(url, data=data)
@@ -95,17 +116,22 @@ class jccdex:
 
     @staticmethod
     def get_balances():
+        data = {'exchange': 'jccdex'}
 
-        url = '/exchange/balances/%s' % jccdex.account_key
+        url = '/exchange/balances/%s' % jccdex.account
 
         try:
 
             js = json.loads(jccdex.exchange(url))
-
+            for item in js.get('data'):
+                data[item.get('currency')] = {
+                    "free": float(item.get('value')) - float(item.get('freezed')),
+                    "freezed": float(item.get('freezed')), 
+                }
         except:
             pass
 
-        return js
+        return data
 
 
     '''
@@ -114,11 +140,9 @@ class jccdex:
 
     @staticmethod
     def get_sequence():
-        url = jccdex.ex_api + '/exchange/sequence/' + account
-        code, js = http.get(url)
-        if code == 200:
-            js = json.loads(js)
-            return js.get('data').get('sequence')
+        url = '/exchange/sequence/%s' % jccdex.account
+        js = json.loads(jccdex.exchange(url))
+        return js.get('data').get('sequence')
 
 
     '''
@@ -127,12 +151,9 @@ class jccdex:
 
     @staticmethod
     def query():
-        url = jccdex.ex_api + '/exchange/orders/%s/1' % account
-        code, js = http.get(url)
-        if code == 200:
-            js = json.loads(js)
-            print (js)
-            return js.get('data')
+        url = '/exchange/orders/%s/1' % jccdex.account
+        js = json.loads(jccdex.exchange(url))
+        return js.get('data')
 
 
     '''
@@ -174,7 +195,7 @@ class jccdex:
         o = {
             "Flags": flags,
             "Fee": 0.00001,
-            "Account": account,
+            "Account": jccdex.account,
             "TransactionType": 'OfferCreate',
             "TakerGets": {
                 "value": gets_val,
@@ -188,7 +209,7 @@ class jccdex:
             }
         }
 
-        w = Wallet(secret)
+        w = Wallet(jccdex.secret)
 
         o['Sequence'] = sequence
         o['SigningPubKey'] = w.get_public_key()
@@ -201,15 +222,11 @@ class jccdex:
         blob = serial.from_json(o).to_hex()
         print(blob)
 
-        url = jccdex.ex_api + '/exchange/sign_order'
-
         data = {}
         data['sign'] = blob
 
-        r = requests.post(url, data=data)
-        print(r.content)
-
-        js = json.loads(r.content)
+        url = '/exchange/sign_order'
+        js = jccdex.exchange(url, data = data)
         print(js.get('msg'))
 
         if 'data' in js:
@@ -229,12 +246,12 @@ class jccdex:
         o = {
             "Flags": 0,
             "Fee": 0.00001,
-            "Account": account,
+            "Account": jccdex.account,
             "TransactionType": 'OfferCancel',
             "OfferSequence": sequence
         }
 
-        w = Wallet(secret)
+        w = Wallet(jccdex.secret)
 
         o['Sequence'] = jccdex.get_sequence()
         o['SigningPubKey'] = w.get_public_key()
@@ -247,7 +264,7 @@ class jccdex:
         blob = serial.from_json(o).to_hex()
         print(blob)
 
-        url = jccdex.ex_api + '/exchange/sign_cancel_order'
+        url = 'http://' + random.choice(jccdex.api['exHosts']) + '/exchange/sign_cancel_order'
 
         data = {}
         data['sign'] = blob
@@ -267,7 +284,7 @@ class jccdex:
     @staticmethod
     def get_tx():
 
-        url = '/exchange/tx/%s' % jccdex.account_key
+        url = '/exchange/tx/%s' % jccdex.account
 
         try:
 

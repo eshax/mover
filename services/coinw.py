@@ -77,12 +77,24 @@ class coinw:
 
     @staticmethod
     def get_account():
-
+        data = {'exchange': 'coinw'}
         action = 'action=userinfo&'
 
         param = ''
 
-        return coinw.post(action, param)
+        js = json.loads(coinw.post(action, param))
+        for item in js.get('data').get('free'):
+            free = float(js.get('data').get('free').get(item))
+            freezed = float(js.get('data').get('frozen').get(item))
+            if free == 0 and freezed == 0:
+                continue
+            else:
+                data[item] = {
+                "free": free,
+                "freezed": freezed 
+            }
+
+        return data
 
 
     '''
