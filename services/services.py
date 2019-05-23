@@ -2,6 +2,8 @@
 
 import os, sys, time, json, binascii, requests, random
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from jccdex import jccdex
 
 class services:
