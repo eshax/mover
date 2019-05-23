@@ -126,7 +126,7 @@ class jccdex:
             for item in js.get('data'):
                 data[item.get('currency')] = {
                     "free": float(item.get('value')) - float(item.get('freezed')),
-                    "freezed": float(item.get('freezed')), 
+                    "freezed": float(item.get('freezed')),
                 }
         except:
             pass
@@ -231,9 +231,9 @@ class jccdex:
 
         if 'data' in js:
             hash = js.get('data').get('hash')
-            return sequence
+            return {'sequence': sequence, 'hash': hash, 'code': 200}
         else:
-            return ''
+            return {'sequence': sequence, 'hash': '', 'code': 400}
 
 
     '''
@@ -338,8 +338,8 @@ if __name__ == "__main__":
         # js = jccdex.get_balances()
         # print (js)
 
-        # js = jccdex.get_tx()
-        # print js
+        js = jccdex.get_tx()
+        print (js)
 
         # order...
         # buy
@@ -349,8 +349,8 @@ if __name__ == "__main__":
         # print (hash)
 
         ## query...
-        for o in jccdex.query():
-            print (o)
+        # for o in jccdex.query():
+        #     print (o)
 
 
         ## cancel order...
