@@ -17,11 +17,11 @@ class triangle:
 
         while True:
 
-            print (time.strftime("%Y-%m-%d %H:%M:%S"))
-
             o = rdb.rpop("triangle")
 
             if o:
+
+                print (time.strftime("%Y-%m-%d %H:%M:%S"))
 
                 o = json.loads(o)
 
