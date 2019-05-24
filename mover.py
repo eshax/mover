@@ -19,29 +19,35 @@ class triangle:
 
             o = rdb.rpop("triangle")
 
-            o = json.loads(o)
+            if o:
 
-            ooo_time    = o.get('time')
-            now_time    = time.strftime('%Y-%m-%d %H:%M:%S')
+                o = json.loads(o)
 
-            # 放弃10秒钟以前的计划
-            if (compare_time(ooo_time, now_time) > 10):
-                print ('放弃10秒钟以前的计划')
-                continue
+                ooo_time    = o.get('time')
+                now_time    = time.strftime('%Y-%m-%d %H:%M:%S')
 
-            # 不做利润太小的搬砖
-            if o.get('ratio') < 2:
-                print ('不做利润太小的搬砖')
-                continue
+                # 放弃10秒钟以前的计划
+                if (compare_time(ooo_time, now_time) > 10):
+                    print ('放弃10秒钟以前的计划')
+                    continue
 
-            # 只做 直搬
-            if o.get('type')[0] != 'buy':
-                print ('只做 直搬')
-                continue
+                # 不做利润太小的搬砖
+                if o.get('ratio') < 2:
+                    print ('不做利润太小的搬砖')
+                    continue
 
-            # if triangle.check(o):
-            #     triangle.move(o)
-            triangle.check(o)
+                # 只做 直搬
+                if o.get('type')[0] != 'buy':
+                    print ('只做 直搬')
+                    continue
+
+                # if triangle.check(o):
+                #     triangle.move(o)
+                triangle.check(o)
+
+            else:
+
+                time.sleep(1)
 
 
 
