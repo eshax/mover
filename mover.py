@@ -3,10 +3,10 @@
 
 import os, sys, time, json, redis, pymongo
 
-from services.services import services
-
 rdb = redis.Redis(host='127.0.0.1', port=6379, db=0)
 mdb = pymongo.MongoClient('127.0.0.1', 27017)
+
+from common import common
 
 class triangle:
 
@@ -39,10 +39,9 @@ class triangle:
                 print ('只做 直搬')
                 continue
 
-            triangle.check(o)
-
             # if triangle.check(o):
             #     triangle.move(o)
+            triangle.check(o)
 
 
 
@@ -60,7 +59,7 @@ class triangle:
             type = plan.get('type')
             symbol = plan.get('symbol')
 
-            depth = services.get_depth('jccdex', symbol)
+            depth = common.get_depth(symbol)
 
             if type == 'buy':
                 asks = depth.get('asks')
@@ -152,3 +151,5 @@ def compare_time(time1, time2):
 if __name__ == '__main__':
 
     triangle.run()
+
+    # print (common.get_depth('jccdex', 'swtc/eth'))
