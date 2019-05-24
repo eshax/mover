@@ -146,8 +146,7 @@ class plan:
 
         }
 
-        if types[0] in ['buy']:
-            rdb.lpush('triangle', json.dumps(o, ensure_ascii=False))
+        rdb.lpush('triangle', json.dumps(o, ensure_ascii=False))
 
         mdb.mover.plan.insert(o)
 
