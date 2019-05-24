@@ -457,8 +457,8 @@ if __name__ == "__main__":
             coinw,bchabc/usdt/cnyt
         '''
         print ('read scan.list')
-        if os.path.exists('scan.list'):
-            with open('scan.list', 'r') as f:
+        if os.path.exists('/opt/git/mover/scan.list'):
+            with open('/opt/git/mover/scan.list', 'r') as f:
                 for line in f.readlines():
 
                     if '[' in line or '#' in line:
