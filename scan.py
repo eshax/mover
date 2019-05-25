@@ -137,7 +137,7 @@ class plan:
             "type": "triangle",
             "dex": dex,
             "ratio": ratio,
-            "prices": prices, "amount": amounts, "types": types, "symbols": symbols,
+            "prices": prices, "amounts": amounts, "types": types, "symbols": symbols,
             "plan": [
                 { "step": 1, "symbol": symbols[0], "type": types[0], "price": prices[0], "amount": x },
                 { "step": 2, "symbol": symbols[1], "type": types[1], "price": prices[1], "amount": y },
