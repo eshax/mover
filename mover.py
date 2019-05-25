@@ -16,7 +16,7 @@ class triangle:
     def run():
 
         mover_count = 2
-        
+
         while True:
 
             o = rdb.rpop("triangle")
@@ -38,17 +38,17 @@ class triangle:
                 # 不做利润太小的搬砖
                 if o.get('ratio') < 1.00:
                     print ('不做利润太小的搬砖')
-                    print (o.get("ratio"), o.get("type"))
+                    print (o.get("ratio"), o.get("types"))
                     continue
 
                 # 只做 直搬
                 if o.get('type')[0] != 'buy':
                     print ('只做直搬')
-                    print (o.get("type"))
+                    print (o.get("ratio"), o.get("types"), o.get("symbols"), o.get('prices'), o.get('amounts'))
                     continue
 
                 if triangle.check(o):
-                    
+
                     # 测试阶段、限制搬砖次数
                     if mover_count > 0:
                         triangle.move(o)
@@ -155,10 +155,10 @@ class triangle:
                         p['msg'] = '交易失败!'
                         mdb.mover.error.insert(o)
                         return False
-                    
+
         mdb.mover.finish.insert(o)
         return True
-                
+
 
 
 '''
