@@ -15,6 +15,8 @@ class triangle:
     @staticmethod
     def run():
 
+        mover_count = 2
+        
         while True:
 
             o = rdb.rpop("triangle")
@@ -34,18 +36,23 @@ class triangle:
                     continue
 
                 # 不做利润太小的搬砖
-                if o.get('ratio') < 2:
+                if o.get('ratio') < 1.00:
                     print ('不做利润太小的搬砖')
+                    print (o.get("ratio"), o.get("type"))
                     continue
 
                 # 只做 直搬
                 if o.get('type')[0] != 'buy':
-                    print ('只做 直搬')
+                    print ('只做直搬')
+                    print (o.get("type"))
                     continue
 
-                # if triangle.check(o):
-                #     triangle.move(o)
-                triangle.check(o)
+                if triangle.check(o):
+                    
+                    # 测试阶段、限制搬砖次数
+                    if mover_count > 0:
+                        triangle.move(o)
+                        mover_count -= 1
 
             else:
 
@@ -77,10 +84,12 @@ class triangle:
                 a = asks[0]
                 if price < a.get('price'):
                     print ('发现计划中的价格比当前卖一价格低, 放弃搬砖')
+                    print (price, '<', a.get('price'))
                     return False
 
                 if amount < a.get('amount'):
                     print ('发现计划中的交易量比当前卖一的挂单量少, 放弃搬砖')
+                    print (amount, '<', a.get('amount'))
                     return False
 
             if type == 'sell':
@@ -91,10 +100,12 @@ class triangle:
                 b = bids[0]
                 if price > b.get('price'):
                     print ('发现计划中的价格比当前买一的价格高, 放弃搬砖')
+                    print (price, '>', b.get('price'))
                     return False
 
                 if amount < b.get('amount'):
                     print ('发现计划中的交易量比当前卖一的挂单量少, 放弃搬砖')
+                    print (amount, '<', b.get("amount"))
                     return False
 
         print ('!!!!符合搬砖条件!!!!!可以执行搬砖!!!!!')
@@ -123,8 +134,8 @@ class triangle:
                 od = jccdex.order(type, symbol, price, amount)
                 if od.get('code') == 400:
                     p['msg'] = '交易失败!'
-                    mdb.error.insert(o)
-                    return
+                    mdb.mover.error.insert(o)
+                    return False
 
                 if od.get('code') == 200:
                     n = 10
@@ -142,8 +153,12 @@ class triangle:
 
                     if n == 0:
                         p['msg'] = '交易失败!'
-                        mdb.error.insert(o)
-                        return
+                        mdb.mover.error.insert(o)
+                        return False
+                    
+        mdb.mover.finish.insert(o)
+        return True
+                
 
 
 '''
