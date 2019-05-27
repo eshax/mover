@@ -171,7 +171,7 @@ class jccdex:
             for item in js.get('data'):
                 coin = item.get('currency')
                 if coin[0] == 'J':
-                    coin = coin[1:] 
+                    coin = coin[1:]
                 free = float(item.get('value')) - float(item.get('freezed'))
                 freezed = float(item.get('freezed'))
                 if free == 0 and freezed == 0:
@@ -227,7 +227,7 @@ class jccdex:
     '''
 
     @staticmethod
-    def order(type, symbol, price, amount):
+    def order(type, symbol, price, amount, sequence=0):
 
         """
         type:    交易类型  buy(买),  sell(卖)
@@ -240,7 +240,8 @@ class jccdex:
         symbols = jccdex.get_symbol(symbol)
         symbols = symbols.split('-')
 
-        sequence = jccdex.get_sequence()
+        if sequence == 0:
+            sequence = jccdex.get_sequence()
 
         # 交易类型
         if type.lower() == 'buy':
@@ -459,37 +460,20 @@ class triangle:
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
         if z < 0.1:
-            # print ('预计亏损!!! 放弃!!!')
             return False
 
         # buy
-        jccdex.order('buy', symbols[0], prices[0] * 1.1, buy_amount)
+        o = jccdex.order('buy', symbols[0], prices[0], buy_amount)
 
-        count = 5
-        while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[1]) ) >= buy_amount:
-                break
-            count -= 1
-            if count > 0:
-                time.sleep(0.5)
-        if count == 0:
-            return False
+        time.sleep(0.5)
 
         # buy
-        jccdex.order('buy', symbols[1], prices[1] * 1.1, sell_amount)
+        o = jccdex.order('buy', symbols[1], prices[1], sell_amount, o.get("sequence") + 1)
 
-        count = 5
-        while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) >= sell_amount:
-                break
-            count -= 1
-            if count > 0:
-                time.sleep(0.5)
-        if count == 0:
-            return False
+        time.sleep(0.5)
 
         # sell
-        jccdex.order('sell', symbols[2], prices[2] * 0.9, sell_amount)
+        o = jccdex.order('sell', symbols[2], prices[2], sell_amount, o.get("sequence") + 1)
 
         exit()
 
@@ -561,39 +545,16 @@ class triangle:
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
         if z < 0.1:
-            # print ('预计亏损!!! 放弃!!!')
             return False
-
-        # print (symbols, '!!!发现收益!!!开始搬砖!!!')
 
         # buy
-        jccdex.order('buy', symbols[0], prices[0] * 1.1, buy_amount)
-
-        count = 5
-        while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[0]) ) >= buy_amount:
-                break
-            count -= 1
-            if count > 0:
-                time.sleep(0.5)
-        if count == 0:
-            return False
+        o = jccdex.order('buy', symbols[0], prices[0], buy_amount)
 
         # sell
-        jccdex.order('sell', symbols[1], prices[1] * 0.9, buy_amount)
-
-        count = 5
-        while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) >= sell_amount:
-                break
-            count -= 1
-            if count > 0:
-                time.sleep(0.5)
-        if count == 0:
-            return False
+        o = jccdex.order('sell', symbols[1], prices[1], buy_amount, o.get('sequence') + 1)
 
         # sell
-        jccdex.order('sell', symbols[2], prices[2] * 0.9, sell_amount)
+        jccdex.order('sell', symbols[2], prices[2], sell_amount, o.get('sequence') + 1)
 
         exit()
 
@@ -625,19 +586,19 @@ if __name__ == "__main__":
 
         print ('# buy sell sell')
 
-        triangle.buy_sell_sell(['swtc/cnyt', 'swtc/eth', 'eth/cnyt'], 3000)
-        triangle.buy_sell_sell(['moac/cnyt', 'moac/eth', 'eth/cnyt'], 5)
-        triangle.buy_sell_sell(['eth/cnyt', 'eth/usdt', 'usdt/cnyt'], 0.02)
-        triangle.buy_sell_sell(['moac/cnyt', 'moac/swtc','swtc/cnyt'], 5)
-        triangle.buy_sell_sell(['jcc/cnyt', 'jcc/swtc', 'swtc/cnyt'], 100)
-        triangle.buy_sell_sell(['xrp/cnyt', 'xrp/swtc', 'swtc/cnyt'], 10)
-        triangle.buy_sell_sell(['csp/cnyt', 'csp/swtc', 'swtc/cnyt'], 500)
-        triangle.buy_sell_sell(['call/cnyt', 'call/swtc', 'swtc/cnyt'], 3000)
-        triangle.buy_sell_sell(['slash/cnyt', 'slash/swtc', 'swtc/cnyt'], 3000)
-        triangle.buy_sell_sell(['swtc/cnyt', 'swtc/usdt', 'usdt/cnyt'], 3000)
-        triangle.buy_sell_sell(['stm/cnyt', 'stm/swtc', 'swtc/cnyt'], 3000)
-        triangle.buy_sell_sell(['moac/cnyt', 'moac/usdt', 'usdt/cnyt'], 5)
-        triangle.buy_sell_sell(['fst/cnyt', 'fst/usdt', 'usdt/cnyt'], 20)
-        triangle.buy_sell_sell(['xrp/cnyt', 'xrp/usdt', 'usdt/cnyt'], 10)
+        # triangle.buy_sell_sell(['swtc/cnyt', 'swtc/eth', 'eth/cnyt'], 3000)
+        # triangle.buy_sell_sell(['moac/cnyt', 'moac/eth', 'eth/cnyt'], 5)
+        # triangle.buy_sell_sell(['eth/cnyt', 'eth/usdt', 'usdt/cnyt'], 0.02)
+        # triangle.buy_sell_sell(['moac/cnyt', 'moac/swtc','swtc/cnyt'], 5)
+        # triangle.buy_sell_sell(['jcc/cnyt', 'jcc/swtc', 'swtc/cnyt'], 100)
+        # triangle.buy_sell_sell(['xrp/cnyt', 'xrp/swtc', 'swtc/cnyt'], 10)
+        # triangle.buy_sell_sell(['csp/cnyt', 'csp/swtc', 'swtc/cnyt'], 500)
+        # triangle.buy_sell_sell(['call/cnyt', 'call/swtc', 'swtc/cnyt'], 3000)
+        # triangle.buy_sell_sell(['slash/cnyt', 'slash/swtc', 'swtc/cnyt'], 3000)
+        # triangle.buy_sell_sell(['swtc/cnyt', 'swtc/usdt', 'usdt/cnyt'], 3000)
+        # triangle.buy_sell_sell(['stm/cnyt', 'stm/swtc', 'swtc/cnyt'], 3000)
+        # triangle.buy_sell_sell(['moac/cnyt', 'moac/usdt', 'usdt/cnyt'], 5)
+        # triangle.buy_sell_sell(['fst/cnyt', 'fst/usdt', 'usdt/cnyt'], 20)
+        # triangle.buy_sell_sell(['xrp/cnyt', 'xrp/usdt', 'usdt/cnyt'], 10)
 
         time.sleep(3)
