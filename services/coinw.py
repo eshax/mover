@@ -16,8 +16,8 @@ class coinw:
 
     api_url     = 'http://api.coinw.ai/appApi.html?'
 
-    api_key     = 'f711c9a7-d548-4b06-b5b1-8e8d2d1be979'
-    secret_key  = 'SWKD2GYICN8SBAWSYDFWTFXG3KXKDYUPYUVS'
+    api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
+    secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
 
 
 
@@ -91,7 +91,7 @@ class coinw:
             else:
                 data[item] = {
                 "free": free,
-                "freezed": freezed 
+                "freezed": freezed
             }
 
         return data
