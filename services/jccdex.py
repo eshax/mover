@@ -332,13 +332,101 @@ class jccdex:
         return depth, js
 
 
+class triangle:
+
+
+    '''
+    站内三角形, 单边交易
+    ['swtc', 'eth', 'cnyt']
+
+    plan A
+
+    buy buy sell
+
+     buy: eth/cnyt
+     buy: swtc/eth
+    sell: swtc/cnyt
+
+    '''
+
+    @staticmethod
+    def buy_buy_sell(symbols, buy_amount=0.01):
+
+        print ('# buy buy sell')
+
+        print (symbols)
+
+        data = []
+        try:
+            for symbol in symbols:
+                depth, _ = jccdex.get_depth(symbol)
+                if 'asks' not in depth or 'bids' not in depth:
+                    return
+                if len(depth.get('asks')) == 0 or len(depth.get('bids')) == 0:
+                    return
+                data.append(depth)
+        except:
+            return
+
+        prices = [
+            data[0].get('asks')[0]['price'],
+            data[1].get('asks')[0]['price'],
+            data[2].get('bids')[0]['price']
+        ]
+        # print (prices)
+
+        amounts = [
+            data[0].get('asks')[0]['amount'],
+            data[1].get('asks')[0]['amount'],
+            data[2].get('bids')[0]['amount']
+        ]
+        # print (amounts)
+
+        if amounts[0] < buy_amount:
+            print ('第一个 buy 的 ask amount 不足 ', buy_amount, amounts[0])
+            return
+
+        sell_amount = round(buy_amount / prices[1], 2)
+        sell_amount -= 0.01
+        sell_amount = round(sell_amount, 2)
+
+        if sell_amount > amounts[1]:
+            print ('第二个 buy 的 ask amount 不足', sell_amount, amounts[1])
+            return
+
+        if sell_amount > amounts[2]:
+            print ('第三个 sell 的 bid amount 不足', sell_amount, amounts[2])
+            return
+
+        # print (buy_amount, sell_amount, sell_amount)
+
+        # 计算利润
+        x = round(buy_amount * prices[0], 2)
+        y = round(sell_amount * prices[2], 2)
+        z = round(y - x, 2)
+
+        print ('消费:', x, '产出:', y, '', '收益:', z)
+
+        if z < 0.1:
+            print ('预计亏损!!! 放弃!!!')
+            return
+
+        if z > 0.1:
+            print ('发现收益!!! 开始搬砖!!!')
+
+
+
 if __name__ == "__main__":
 
-    pass
+
 
     while True:
 
-        time.sleep(1)
+        print (time.strftime("%Y-%m-%d %H:%M:%S"))
+        triangle.buy_buy_sell(['eth/cnyt', 'swtc/eth', 'swtc/cnyt'])
+        print ()
+
+        time.sleep(3)
 
         # o, _ = jccdex.get_depth('eth/cnyt')
         # print (o)
@@ -346,8 +434,8 @@ if __name__ == "__main__":
         # js = jccdex.get_balances()
         # print (js)
 
-        js = jccdex.get_tx()
-        print (js)
+        # js = jccdex.get_tx()
+        # print (js)
 
         # order...
         # buy
@@ -364,4 +452,4 @@ if __name__ == "__main__":
         ## cancel order...
         #jccdex.cancel_order(61)
 
-        break
+        # break
