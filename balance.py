@@ -10,6 +10,7 @@ import mysql.connector.pooling
 from services.coinw import coinw
 from services.jccdex import jccdex
 from services.huobi import huobi
+from services.coinbene import coinbene
 
 mdb = pymongo.MongoClient('127.0.0.1', 27017)
 rdb = redis.Redis(host='127.0.0.1', port=6379, db=0)
@@ -32,12 +33,13 @@ class balance:
 
     @staticmethod
     def get():
-        sql = 'INSERT INTO exchange (name, coin, free, freezed, time) VALUES (%s, %s, %s, %s, %s)'
+        exchange = coinw.get_account()
+        balance.save(exchange)
+        exchange = jccdex.get_balances()
+        balance.save(exchange)
+        exchange = coinbene.get_account()
+        balance.save(exchange)
 
-        coinw_balance = coinw.get_account()
-        balance.save(coinw_balance)
-        jccdex_balance = jccdex.get_balances()
-        balance.save(jccdex_balance)
         dbconn.commit()
         db.close()
         dbconn.close()
