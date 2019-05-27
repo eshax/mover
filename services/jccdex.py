@@ -169,10 +169,18 @@ class jccdex:
 
             js = json.loads(jccdex.exchange(url))
             for item in js.get('data'):
-                data[item.get('currency')] = {
-                    "free": float(item.get('value')) - float(item.get('freezed')),
-                    "freezed": float(item.get('freezed')),
-                }
+                coin = item.get('currency')
+                if coin[0] == 'J':
+                    coin = coin[1:] 
+                free = float(item.get('value')) - float(item.get('freezed'))
+                freezed = float(item.get('freezed'))
+                if free == 0 and freezed == 0:
+                    continue
+                else:
+                    data[coin] = {
+                        "free": free,
+                        "freezed": freezed
+                    }
         except:
             pass
 

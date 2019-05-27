@@ -19,6 +19,8 @@ class coinw:
     api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
     secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
 
+    api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
+    secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
 
 
     '''
