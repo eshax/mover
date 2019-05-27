@@ -147,6 +147,9 @@ class jccdex:
             'vcc/cnyt'  : 'VCC-CNY',
             'vcc/swtc'  : 'VCC-SWT',
 
+            'stm/cnyt'  : 'JSTM-CNY',
+            'stm/swtc'  : 'JSTM-SWT',
+
         }
 
         return symbols.get(symbol)
@@ -391,7 +394,7 @@ class triangle:
 
     buy buy sell
 
-     buy: eth/cnyt      <
+     buy: eth/cnyt      <       1853.20 * 0.01 = 18.532cnyt
      buy: swtc/eth      <
     sell: swtc/cnyt     >
 
@@ -445,7 +448,7 @@ class triangle:
         y = round(sell_amount * prices[2], 2)
         z = round(y - x, 2)
 
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0.1 else '-'))
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
         if z < 0.1:
             # print ('预计亏损!!! 放弃!!!')
@@ -493,9 +496,9 @@ class triangle:
 
     buy sell sell
 
-     buy: swtc/cnyt     <   0.00775 * 3000 = 23.25
-    sell: swtc/eth      >   0.000004
-    sell: eth/cnyt      >   1782.41
+     buy: swtc/cnyt     <     0.00775 * 3000 = 23.25cnyt
+    sell: swtc/eth      >   0.0000039 * 3000 = 0.0117eth
+    sell: eth/cnyt      >   1782.41 * 0.0117 = 20.854197cnyt
 
     '''
 
@@ -527,33 +530,33 @@ class triangle:
         ]
 
         if amounts[0] < buy_amount:
-            # print (symbols, '1. ask amount', amounts[0], '<', buy_amount)
-            return
+            # print (time.strftime("%Y-%m-%d %H:%M:%S"), symbols, '1. ask amount', amounts[0], '<', buy_amount)
+            return False
 
         if amounts[1] < buy_amount:
-            # print (symbols, '2. bid amount', amounts[1], '<', buy_amount)
-            return
+            # print (time.strftime("%Y-%m-%d %H:%M:%S"), symbols, '2. bid amount', amounts[1], '<', buy_amount)
+            return False
 
         sell_amount = round(buy_amount * prices[1], 2)
         sell_amount -= 0.01
         sell_amount = round(sell_amount, 2)
 
         if sell_amount > amounts[2]:
-            # print (symbols, '3. bid amount', amounts[2], '<', sell_amount)
-            return
+            # print (time.strftime("%Y-%m-%d %H:%M:%S"), symbols, '3. bid amount', amounts[2], '<', sell_amount)
+            return False
 
         # 计算利润
         x = round(buy_amount * prices[0], 2)
         y = round(sell_amount * prices[2], 2)
         z = round(y - x, 2)
 
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0.1 else '-'))
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
         if z < 0.1:
             # print ('预计亏损!!! 放弃!!!')
-            return
+            return False
 
-        print (symbols, '!!!发现收益!!!开始搬砖!!!')
+        # print (symbols, '!!!发现收益!!!开始搬砖!!!')
 
         # buy
         jccdex.order('buy', symbols[0], prices[0] * 1.1, buy_amount)
@@ -581,11 +584,12 @@ class triangle:
         if count == 0:
             return False
 
-        exit()
-
         # sell
         jccdex.order('sell', symbols[2], prices[2] * 0.9, sell_amount)
 
+        exit()
+
+        return True
 
 
 if __name__ == "__main__":
@@ -596,8 +600,8 @@ if __name__ == "__main__":
 
         print ('# buy buy sell')
 
-        triangle.buy_buy_sell(['eth/cnyt', 'swtc/eth', 'swtc/cnyt'], 0.015)
-        triangle.buy_buy_sell(['eth/cnyt', 'moac/eth', 'moac/cnyt'], 0.015)
+        triangle.buy_buy_sell(['eth/cnyt', 'swtc/eth', 'swtc/cnyt'], 0.02)
+        triangle.buy_buy_sell(['eth/cnyt', 'moac/eth', 'moac/cnyt'], 0.02)
         triangle.buy_buy_sell(['usdt/cnyt', 'eth/usdt', 'eth/cnyt'], 4)
         triangle.buy_buy_sell(['swtc/cnyt', 'moac/swtc', 'moac/cnyt'], 3000)
         triangle.buy_buy_sell(['swtc/cnyt', 'jcc/swtc', 'jcc/cnyt'], 3000)
@@ -605,6 +609,7 @@ if __name__ == "__main__":
         triangle.buy_buy_sell(['swtc/cnyt', 'csp/swtc', 'csp/cnyt'], 3000)
         triangle.buy_buy_sell(['swtc/cnyt', 'call/swtc', 'call/cnyt'], 3000)
         triangle.buy_buy_sell(['swtc/cnyt', 'slash/swtc', 'slash/cnyt'], 3000)
+        triangle.buy_buy_sell(['swtc/cnyt', 'stm/swtc', 'stm/cnyt'], 3000)
         triangle.buy_buy_sell(['usdt/cnyt', 'swtc/usdt', 'swtc/cnyt'], 4)
         triangle.buy_buy_sell(['usdt/cnyt', 'moac/usdt', 'moac/cnyt'], 4)
         triangle.buy_buy_sell(['usdt/cnyt', 'fst/usdt', 'fst/cnyt'], 4)
@@ -614,7 +619,7 @@ if __name__ == "__main__":
 
         triangle.buy_sell_sell(['swtc/cnyt', 'swtc/eth', 'eth/cnyt'], 3000)
         triangle.buy_sell_sell(['moac/cnyt', 'moac/eth', 'eth/cnyt'], 5)
-        triangle.buy_sell_sell(['eth/cnyt', 'eth/usdt', 'usdt/cnyt'], 0.015)
+        triangle.buy_sell_sell(['eth/cnyt', 'eth/usdt', 'usdt/cnyt'], 0.02)
         triangle.buy_sell_sell(['moac/cnyt', 'moac/swtc','swtc/cnyt'], 5)
         triangle.buy_sell_sell(['jcc/cnyt', 'jcc/swtc', 'swtc/cnyt'], 100)
         triangle.buy_sell_sell(['xrp/cnyt', 'xrp/swtc', 'swtc/cnyt'], 10)
@@ -622,6 +627,7 @@ if __name__ == "__main__":
         triangle.buy_sell_sell(['call/cnyt', 'call/swtc', 'swtc/cnyt'], 3000)
         triangle.buy_sell_sell(['slash/cnyt', 'slash/swtc', 'swtc/cnyt'], 3000)
         triangle.buy_sell_sell(['swtc/cnyt', 'swtc/usdt', 'usdt/cnyt'], 3000)
+        triangle.buy_sell_sell(['stm/cnyt', 'stm/swtc', 'swtc/cnyt'], 3000)
         triangle.buy_sell_sell(['moac/cnyt', 'moac/usdt', 'usdt/cnyt'], 5)
         triangle.buy_sell_sell(['fst/cnyt', 'fst/usdt', 'usdt/cnyt'], 20)
         triangle.buy_sell_sell(['xrp/cnyt', 'xrp/usdt', 'usdt/cnyt'], 10)
