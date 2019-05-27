@@ -582,6 +582,8 @@ class triangle:
         if count == 0:
             return False
 
+        exit()
+
         # sell
         jccdex.order('sell', symbols[2], prices[2] * 0.9, sell_amount)
 
