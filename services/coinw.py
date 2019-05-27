@@ -106,17 +106,50 @@ class coinw:
     @staticmethod
     def get_symbol(symbol):
 
-        # 2:BC/CNYT  3:LTC/CNYT  5:HC/CNYT  6:STX/CNYT  7:0X/CNYT  8:CDT/CNYT  9:TNT/CNYT  10:MANA/CNYT  11:OMG/CNYT  12:KNC/CNYT  14:ETH/CNYT  15:AE/CNYT  16:Data/CNYT  17:HPY/CNYT  18:DAT/CNYT  19:RNT/CNYT  20:DEW/CNYT  21:MAG/CNYT  23:STORJ/CNYT  24:SNT/CNYT  25:DOGE/CNYT  28:WICC/CNYT  29:EOS/CNYT  30:SDA/CNYT  31:COINS/CNYT  32:BDG/CNYT  33:CHAT/CNYT  34:IHT/CNYT  36:RCT/CNYT  37:PTC/CNYT  38:ENJ/CNYT  39:EET/CNYT  40:OC/CNYT  41:EPC/CNYT  42:MTC/CNYT  43:MOAC/CNYT  44:EOSDAC/CNYT  45:BTC/CNYT  47:SWTC/CNYT  48:EKT/CNYT  49:EON/CNYT  50:LEEK/CNYT  51:AVH/CNYT  52:CAM/CNYT  53:BCD/CNYT  54:TRIO/CNYT  55:ELF/CNYT  57:ISC/CNYT  58:ONT/CNYT  59:USDT/CNYT  60:XRP/CNYT  61:DASH/CNYT  62:RVN/CNYT  63:DCR/CNYT  65:TST/CNYT  66:QTUM/CNYT  68:ADA/CNYT  69:BCHABC/CNYT  70:TRX/CNYT  71:CVNT/CNYT  72:VET/CNYT  73:HX/CNYT  76:BXA/CNYT  77:BTT/CNYT  78:BTC/USDT  79:ETH/USDT  80:QTUM/USDT  81:HC/USDT  82:DASH/USDT  83:XRP/USDT  84:EOS/USDT  85:BNB/CNYT  86:LTC/USDT  87:ADA/USDT  88:VET/USDT  89:ONG/CNYT  91:HT/CNYT  92:FET/CNYT  93:VTHO/CNYT  94:XMR/CNYT  96:CELR/CNYT  97:VSYS/CNYT  98:TRX/USDT  99:BCHABC/USDT  102:YAX/CNYT  104:BAT/CNYT  105:ZEC/CNYT  107:DREP/CNYT  108:ATOM/CNYT  109:MATIC/CNYT
+        # 2:BC/CNYT  3:LTC/CNYT  5:HC/CNYT  6:STX/CNYT  7:0X/CNYT  8:CDT/CNYT  9:TNT/CNYT  10:MANA/CNYT  11:OMG/CNYT  12:KNC/CNYT  14:ETH/CNYT  15:AE/CNYT  16:Data/CNYT  17:HPY/CNYT  18:DAT/CNYT  19:RNT/CNYT
+        # 20:DEW/CNYT  21:MAG/CNYT  23:STORJ/CNYT  24:SNT/CNYT  25:DOGE/CNYT  28:WICC/CNYT  29:EOS/CNYT  30:SDA/CNYT  31:COINS/CNYT  32:BDG/CNYT  33:CHAT/CNYT  34:IHT/CNYT  36:RCT/CNYT  37:PTC/CNYT  38:ENJ/CNYT
+        # 39:EET/CNYT  40:OC/CNYT  41:EPC/CNYT  42:MTC/CNYT  43:MOAC/CNYT  44:EOSDAC/CNYT  45:BTC/CNYT  47:SWTC/CNYT  48:EKT/CNYT  49:EON/CNYT  50:LEEK/CNYT  51:AVH/CNYT  52:CAM/CNYT  53:BCD/CNYT  54:TRIO/CNYT
+        # 55:ELF/CNYT  57:ISC/CNYT  58:ONT/CNYT  59:USDT/CNYT  60:XRP/CNYT  61:DASH/CNYT  62:RVN/CNYT  63:DCR/CNYT  65:TST/CNYT  66:QTUM/CNYT  68:ADA/CNYT  69:BCHABC/CNYT  70:TRX/CNYT  71:CVNT/CNYT  72:VET/CNYT
+        # 73:HX/CNYT  76:BXA/CNYT  77:BTT/CNYT  78:BTC/USDT  79:ETH/USDT  80:QTUM/USDT  81:HC/USDT  82:DASH/USDT  83:XRP/USDT  84:EOS/USDT  85:BNB/CNYT  86:LTC/USDT  87:ADA/USDT  88:VET/USDT  89:ONG/CNYT
+        # 91:HT/CNYT  92:FET/CNYT  93:VTHO/CNYT  94:XMR/CNYT  96:CELR/CNYT  97:VSYS/CNYT  98:TRX/USDT  99:BCHABC/USDT  102:YAX/CNYT  104:BAT/CNYT  105:ZEC/CNYT  107:DREP/CNYT  108:ATOM/CNYT  109:MATIC/CNYT
 
         symbols = {
 
+            'usdt/cnyt' : 59,
+
+            'hc/cnyt'  : 5,
+            'hc/usdt'  : 81,
+
+            'dash/cnyt'  : 61,
+            'dash/usdt'  : 82,
+
             'ltc/cnyt'  : 3,
+            'ltc/usdt'  : 86,
+
+            'ada/cnyt'  : 68,
+            'ada/usdt'  : 87,
+
+            'qtum/cnyt'  : 66,
+            'qtum/usdt'  : 80,
+
+            'vet/cnyt'  : 72,
+            'vet/usdt'  : 88,
+
+            'trx/cnyt'  : 70,
+            'trx/usdt'  : 98,
+
+            'bchabc/cnyt'  : 69,
+            'bchabc/usdt'  : 99,
+
+            'eth/cnyt'  : 14,
+            'eth/usdt'  : 79,
 
             'moac/cnyt' : 43,
-            'eth/cnyt'  : 14,
+
             'swtc/cnyt' : 47,
 
             'eos/cnyt'  : 29,
+            'eos/usdt'  : 84,
 
             'xrp/cnyt'  : 60,
             'xrp/usdt'  : 83,
@@ -124,15 +157,8 @@ class coinw:
             'bchabc/usdt':99,
             'bchabc/cnyt':69,
 
-            'eth/usdt'  : 79,
-            'btc/usdt'  : 78,
-            'ltc/usdt'  : 86,
-            'eos/usdt'  : 84,
-
             'btc/cnyt'  : 45,
-
-            'usdt/cnyt' : 59,
-
+            'btc/usdt'  : 78,
         }
 
         return symbols.get(symbol)
