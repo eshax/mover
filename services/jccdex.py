@@ -553,8 +553,7 @@ class triangle:
             # print ('预计亏损!!! 放弃!!!')
             return
 
-        if z > 0.1:
-            print (symbols, '!!!发现收益!!!开始搬砖!!!')
+        print (symbols, '!!!发现收益!!!开始搬砖!!!')
 
         # buy
         jccdex.order('buy', symbols[0], prices[0] * 1.1, buy_amount)
