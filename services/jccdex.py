@@ -459,6 +459,8 @@ class triangle:
             if ( jccdex.get_balances_by_currency(symbols[1].split('/')[1]) ) > buy_amount:
                 break
             count -= 1
+            if count > 0:
+                time.sleep(0.5)
         if count == 0:
             return False
 
@@ -470,6 +472,8 @@ class triangle:
             if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) > sell_amount:
                 break
             count -= 1
+            if count > 0:
+                time.sleep(0.5)
         if count == 0:
             return False
 
@@ -558,6 +562,8 @@ class triangle:
             if ( jccdex.get_balances_by_currency(symbols[1].split('/')[0]) ) > buy_amount:
                 break
             count -= 1
+            if count > 0:
+                time.sleep(0.5)
         if count == 0:
             return False
 
@@ -569,6 +575,8 @@ class triangle:
             if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) > sell_amount:
                 break
             count -= 1
+            if count > 0:
+                time.sleep(0.5)
         if count == 0:
             return False
 
