@@ -456,7 +456,7 @@ class triangle:
 
         count = 5
         while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[1]) ) > buy_amount:
+            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[1]) ) >= buy_amount:
                 break
             count -= 1
             if count > 0:
@@ -469,7 +469,7 @@ class triangle:
 
         count = 5
         while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) > sell_amount:
+            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) >= sell_amount:
                 break
             count -= 1
             if count > 0:
@@ -479,6 +479,8 @@ class triangle:
 
         # sell
         jccdex.order('sell', symbols[2], prices[2] * 0.9, sell_amount)
+
+        exit()
 
         return True
 
@@ -559,7 +561,7 @@ class triangle:
 
         count = 5
         while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[0]) ) > buy_amount:
+            if ( jccdex.get_balances_by_currency(symbols[1].split('/')[0]) ) >= buy_amount:
                 break
             count -= 1
             if count > 0:
@@ -572,7 +574,7 @@ class triangle:
 
         count = 5
         while count > 0:
-            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) > sell_amount:
+            if ( jccdex.get_balances_by_currency(symbols[2].split('/')[0]) ) >= sell_amount:
                 break
             count -= 1
             if count > 0:
@@ -624,29 +626,3 @@ if __name__ == "__main__":
         triangle.buy_sell_sell(['xrp/cnyt', 'xrp/usdt', 'usdt/cnyt'], 10)
 
         time.sleep(3)
-
-        # o, _ = jccdex.get_depth('eth/cnyt')
-        # print (o)
-
-        # js = jccdex.get_balances()
-        # print (js)
-
-        # js = jccdex.get_tx()
-        # print (js)
-
-        # order...
-        # buy
-        #hash = jccdex.order('buy', 'swtc/cnyt', 0.0005, 1)
-        # sell
-        # hash = jccdex.order('sell', 'swtc/cnyt', 0.007, 10)
-        # print (hash)
-
-        ## query...
-        # for o in jccdex.query():
-        #     print (o)
-
-
-        ## cancel order...
-        #jccdex.cancel_order(61)
-
-        # break
