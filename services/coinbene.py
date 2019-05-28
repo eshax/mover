@@ -4,6 +4,10 @@
 '''
 满币网接口
 
+https://www.coinbene.vip/#/
+
+https://github.com/Coinbene/API-Documents-CHN/wiki/0.0.0-Coinbene-API%E6%96%87%E6%A1%A3
+
 '''
 import sys, os, json, time
 
