@@ -569,7 +569,7 @@ if __name__ == "__main__":
 
     while True:
 
-        print (time.strftime("%Y-%m-%d %H:%M:%S"))
+        # print (time.strftime("%Y-%m-%d %H:%M:%S"))
 
         print ('# buy buy sell')
 
