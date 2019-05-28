@@ -440,9 +440,7 @@ class triangle:
             # print (symbols, '1. ask amount', amounts[0], '<', buy_amount)
             return False
 
-        sell_amount = round(buy_amount / prices[1], 2)
-        sell_amount -= 0.01
-        sell_amount = round(sell_amount, 2)
+        sell_amount = buy_amount / (prices[1] * 1.01)
 
         if sell_amount > amounts[1]:
             # print (symbols, '2. ask amount', amounts[1], '<', sell_amount)
@@ -531,9 +529,7 @@ class triangle:
             # print (time.strftime("%Y-%m-%d %H:%M:%S"), symbols, '2. bid amount', amounts[1], '<', buy_amount)
             return False
 
-        sell_amount = round(buy_amount * prices[1], 2)
-        sell_amount -= 0.01
-        sell_amount = round(sell_amount, 2)
+        sell_amount = buy_amount * (prices[1] * 0.99)
 
         if sell_amount > amounts[2]:
             # print (time.strftime("%Y-%m-%d %H:%M:%S"), symbols, '3. bid amount', amounts[2], '<', sell_amount)
