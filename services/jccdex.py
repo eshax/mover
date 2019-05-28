@@ -459,21 +459,21 @@ class triangle:
 
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
-        if z < 0.3:
+        if z < 0.4:
             return False
 
         # buy
-        o = jccdex.order('buy', symbols[0], prices[0], buy_amount)
+        o = jccdex.order('buy', symbols[0], prices[0] * 1.01, buy_amount)
 
         time.sleep(1)
 
         # buy
-        o = jccdex.order('buy', symbols[1], prices[1], sell_amount, o.get("sequence") + 1)
+        o = jccdex.order('buy', symbols[1], prices[1] * 1.01, sell_amount, o.get("sequence") + 1)
 
         time.sleep(1)
 
         # sell
-        o = jccdex.order('sell', symbols[2], prices[2], sell_amount, o.get("sequence") + 1)
+        o = jccdex.order('sell', symbols[2], prices[2] * 0.99, sell_amount, o.get("sequence") + 1)
 
         # exit()
 
@@ -546,21 +546,21 @@ class triangle:
 
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
-        if z < 0.3:
+        if z < 0.4:
             return False
 
         # buy
-        o = jccdex.order('buy', symbols[0], prices[0], buy_amount)
+        o = jccdex.order('buy', symbols[0], prices[0] * 1.01, buy_amount)
 
         time.sleep(1)
 
         # sell
-        o = jccdex.order('sell', symbols[1], prices[1], buy_amount, o.get('sequence') + 1)
+        o = jccdex.order('sell', symbols[1], prices[1] * 0.99, buy_amount, o.get('sequence') + 1)
 
         time.sleep(1)
 
         # sell
-        jccdex.order('sell', symbols[2], prices[2], sell_amount, o.get('sequence') + 1)
+        jccdex.order('sell', symbols[2], prices[2] * 0.99, sell_amount, o.get('sequence') + 1)
 
         # exit()
 
