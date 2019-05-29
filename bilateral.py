@@ -4,6 +4,7 @@ import time
 
 from services.jccdex import jccdex
 from services.coinbene import coinbene
+from services.coinw import coinw
 
 
 
@@ -18,7 +19,7 @@ def get_depth(dex, symbol):
         depth = coinbene.get_depth(symbol)
 
     if dex == 'coinw':
-        depth = coinbene.get_depth(symbol)
+        depth = coinw.get_depth(symbol)
 
     return depth
 
