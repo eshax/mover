@@ -59,25 +59,25 @@ def bilateral(a_dex, b_dex, symbol, amount):
         bp = depth[2]
         sp = depth[4]
         x = (sp - bp) / ((sp + bp) / 2)
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '[ %s : %s ]' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '%s-%s' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
             # order(a_dex, 'buy', symbol, buy_price, amount)
             # order(b_dex, 'sell', symbol, sell_price, amount)
     else:
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '[ %s : %s ]' % (a_dex, b_dex), symbol, 'low on amount', amount, '>', depth[3], '|', depth[5])
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '%s-%s' % (a_dex, b_dex), symbol, 'low on amount', amount, '>', depth[3], '|', depth[5])
 
     if amount < depth[7] and amount < depth[1]:
         bp = depth[6]
         sp = depth[0]
         x = (sp - bp) / ((sp + bp) / 2)
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '[ %s : %s ]' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '%s-%s' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
             # order(b_dex, 'buy', symbol, buy_price, amount)
             # order(a_dex, 'sell', symbol, sell_price, amount)
     else:
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '[ %s : %s ]' % (a_dex, b_dex), symbol, 'low on amount', amount, '>', depth[7], '|', depth[1])
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '%s-%s' % (a_dex, b_dex), symbol, 'low on amount', amount, '>', depth[7], '|', depth[1])
 
 
 while True:
