@@ -231,7 +231,9 @@ class coinbene:
             "symbol": coinbene.get_symbol(symbol)
         }
         url = coinbene.trade_url + "order/place"
-        return coinbene.http_post_sign(url, o)
+        js = coinbene.http_post_sign(url, o)
+        print (js)
+        return js
 
 
 
