@@ -211,7 +211,7 @@ if __name__ == "__main__":
         time.sleep(1)
 
         for a in ['eos/cnyt', 'moac/cnyt']:
-            o, _ = coinw.get_depth(a)
+            o = coinw.get_depth(a)
 
             print (a)
             print (o)
