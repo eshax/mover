@@ -68,8 +68,37 @@ class coinbene:
 
         symbols = {
             "btc/usdt"  : "btcusdt",
+
+            # ['btc/usdt', 'eth/btc', 'eth/usdt']
             "eth/usdt"  : "ethusdt",
             "eth/btc"   : "ethbtc",
+
+            # ['btc/usdt', 'eos/btc', 'eos/usdt']
+            "eos/btc"   : "eosbtc",
+            "eos/usdt"  : "eosusdt",
+
+            # ['btc/usdt', 'trx/btc', 'trx/usdt']
+            "trx/btc"   : "trxbtc",
+            "trx/usdt"  : "trxusdt",
+
+            # ['btc/usdt', 'xrp/btc', 'xrp/usdt']
+            "xrp/btc"   : "xrpbtc",
+            "xrp/usdt"  : "xrpusdt",
+
+            "neo/btc"   : "neobtc",
+            "neo/usdt"  : "neousdt",
+
+            "cnn/btc"   : "cnnbtc",
+            "cnn/usdt"  : "cnnusdt",
+
+            "ltc/btc"   : "ltcbtc",
+            "ltc/usdt"  : "ltcusdt",
+
+            "mxm/eth"   : "mxmeth",
+            "mxm/usdt"  : "mxmusdt",
+
+            "cs/eth"   : "cseth",
+            "cs/usdt"  : "csusdt",
         }
 
         return symbols.get(symbol)
@@ -260,7 +289,7 @@ class triangle:
     '''
 
     @staticmethod
-    def buy_buy_sell(symbols, buy_amount):
+    def buy_buy_sell(symbols, buy_amount, fee):
 
         data = []
         try:
@@ -310,7 +339,7 @@ class triangle:
 
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
-        if z < 0.4:
+        if z < fee:
             return False
 
         # buy
@@ -335,20 +364,19 @@ class triangle:
 
     '''
     站内三角形, 单边交易
-    ['swtc', 'eth', 'cnyt']
 
     plan B
 
     buy sell sell
 
-     buy: swtc/cnyt     <     0.00775 * 3000 = 23.25cnyt
-    sell: swtc/eth      >   0.0000039 * 3000 = 0.0117eth
-    sell: eth/cnyt      >   1782.41 * 0.0117 = 20.854197cnyt
+     buy: eth/usdt      <   270.18 * 0.007 = 1.89126
+    sell: eth/btc       >   0.031072 * 0.007 = 0.000217504
+    sell: btc/usdt      >   8681.76 * 0.000217504 = 1.88831
 
     '''
 
     @staticmethod
-    def buy_sell_sell(symbols, buy_amount):
+    def buy_sell_sell(symbols, buy_amount, fee):
 
         data = []
         try:
@@ -395,7 +423,7 @@ class triangle:
 
         print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, 'x: %.2f' % x, 'y: %.2f' % y, 'z: %.2f' % z, ('+' if z > 0 else '-'))
 
-        if z < 0.4:
+        if z < fee:
             return False
 
         # buy
@@ -428,8 +456,22 @@ if __name__ == "__main__":
 
         print ('# buy buy sell')
 
-        triangle.buy_buy_sell(['btc/usdt', 'eth/btc', 'eth/usdt'], 0.0002)
+        triangle.buy_buy_sell(['btc/usdt', 'eth/btc', 'eth/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'eos/btc', 'eos/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'trx/btc', 'trx/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'xrp/btc', 'xrp/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'neo/btc', 'neo/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'cnn/btc', 'cnn/usdt'], 0.0002, 0.4)
+        triangle.buy_buy_sell(['btc/usdt', 'ltc/btc', 'ltc/usdt'], 0.0002, 0.4)
 
         print ('# buy sell sell')
 
-        time.sleep(3)
+        triangle.buy_sell_sell(['eth/usdt', 'eth/btc', 'btc/usdt'], 0.007, 0.4)
+        triangle.buy_sell_sell(['eos/usdt', 'eos/btc', 'btc/usdt'], 0.25, 0.4)
+        triangle.buy_sell_sell(['trx/usdt', 'trx/btc', 'btc/usdt'], 5.8, 0.4)
+        triangle.buy_sell_sell(['xrp/usdt', 'xrp/btc', 'btc/usdt'], 4.5, 0.4)
+        triangle.buy_sell_sell(['neo/usdt', 'neo/btc', 'btc/usdt'], 0.16, 0.4)
+        triangle.buy_sell_sell(['cnn/usdt', 'cnn/btc', 'btc/usdt'], 10000, 0.4)
+        triangle.buy_sell_sell(['ltc/usdt', 'ltc/btc', 'btc/usdt'], 0.018, 0.4)
+
+        time.sleep(2)
