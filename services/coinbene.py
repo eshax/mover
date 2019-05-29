@@ -69,6 +69,8 @@ class coinbene:
         symbols = {
             "btc/usdt"  : "btcusdt",
 
+            "moac/usdt" : "moacusdt",
+
             # ['btc/usdt', 'eth/btc', 'eth/usdt']
             "eth/usdt"  : "ethusdt",
             "eth/btc"   : "ethbtc",
