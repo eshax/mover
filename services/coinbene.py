@@ -170,6 +170,8 @@ class coinbene:
     @staticmethod
     def get_depth(symbol):
 
+        symbol = coinbene.get_symbol(symbol)
+
         depth = {"bids": [], "asks": [], "symbol": symbol}
 
         url = coinbene.api_url + "/v1/market/orderbook?symbol=" + str(symbol)
@@ -265,8 +267,10 @@ class triangle:
             for symbol in symbols:
                 depth = coinbene.get_depth(symbol)
                 if 'asks' not in depth or 'bids' not in depth:
+                    print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, symbol, 'no depth')
                     return False
                 if len(depth.get('asks')) == 0 or len(depth.get('bids')) == 0:
+                    print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, symbol, 'depth count is 0')
                     return False
                 data.append(depth)
         except:
@@ -286,17 +290,17 @@ class triangle:
         ]
 
         if amounts[0] < buy_amount:
-            # print (symbols, '1. ask amount', amounts[0], '<', buy_amount)
+            print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, '1. ask amount', amounts[0], '<', buy_amount)
             return False
 
         sell_amount = buy_amount / (prices[1] * 1.01)
 
         if sell_amount > amounts[1]:
-            # print (symbols, '2. ask amount', amounts[1], '<', sell_amount)
+            print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, '2. ask amount', amounts[1], '<', sell_amount)
             return False
 
         if sell_amount > amounts[2]:
-            # print (symbols, '3. bid amount', amounts[2], '<', sell_amount)
+            print (time.strftime("%Y-%m-%d %H:%M:%S"), '%42s' % symbols, '3. bid amount', amounts[2], '<', sell_amount)
             return False
 
         # 计算利润
@@ -315,12 +319,12 @@ class triangle:
         time.sleep(1)
 
         # buy
-        o = coinbene.order('buy', symbols[1], prices[1] * 1.01, sell_amount, o.get("sequence") + 1)
+        o = coinbene.order('buy', symbols[1], prices[1] * 1.01, sell_amount)
 
         time.sleep(1)
 
         # sell
-        o = coinbene.order('sell', symbols[2], prices[2] * 0.99, sell_amount, o.get("sequence") + 1)
+        o = coinbene.order('sell', symbols[2], prices[2] * 0.99, sell_amount)
 
         # exit()
 
@@ -400,12 +404,12 @@ class triangle:
         time.sleep(1)
 
         # sell
-        o = coinbene.order('sell', symbols[1], prices[1] * 0.99, buy_amount, o.get('sequence') + 1)
+        o = coinbene.order('sell', symbols[1], prices[1] * 0.99, buy_amount)
 
         time.sleep(1)
 
         # sell
-        o = coinbene.order('sell', symbols[2], prices[2] * 0.99, sell_amount, o.get('sequence') + 1)
+        o = coinbene.order('sell', symbols[2], prices[2] * 0.99, sell_amount)
 
         # exit()
 
