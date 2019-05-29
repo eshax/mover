@@ -199,12 +199,12 @@ if __name__ == "__main__":
 
     pass
 
-    o = coinw.get_account()
-
-    o = json.loads(o)
-
-    print ('msg:', o.get("msg"))
-    print ()
+    # o = coinw.get_account()
+    #
+    # o = json.loads(o)
+    #
+    # print ('msg:', o.get("msg"))
+    # print ()
 
     while True:
 
