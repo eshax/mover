@@ -19,9 +19,6 @@ class coinw:
     api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
     secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
 
-    api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
-    secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
-
 
     '''
     签名
@@ -173,7 +170,6 @@ class coinw:
     def get_depth(symbol):
 
         depth = {"bids": [], "asks": [], "symbol": symbol}
-        js = {}
 
         symbol = coinw.get_symbol(symbol)
 
@@ -186,16 +182,16 @@ class coinw:
             js = json.loads(coinw.post(action, param))
 
             if 'data' in js:
-                for o in js['data']['bids']:
+                for o in js['data']['bids'][:5]:
                     depth['bids'].append({"price": float(o['price']), "amount": float(o['amount'])})
-                for o in js['data']['asks']:
+                for o in js['data']['asks'][:5]:
                     depth['asks'].append({"price": float(o['price']), "amount": float(o['amount'])})
 
         except Exception as err:
             pass
             print (err)
 
-        return depth, js
+        return depth
 
 
 
