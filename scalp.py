@@ -7,6 +7,9 @@ from services.jccdex import jccdex
 
 prices = {}
 
+'''
+查询最新的价格
+'''
 def get_last_price(dex, symbol):
 
     if dex == 'jccdex':
@@ -15,7 +18,9 @@ def get_last_price(dex, symbol):
     return None
 
 
-
+'''
+下单
+'''
 def order(dex, symbol, price, point, amount):
 
     buy = price - point
@@ -62,6 +67,10 @@ def order(dex, symbol, price, point, amount):
 
     print ()
 
+
+'''
+剥头皮
+'''
 def scalp(dex, symbol, point, amount):
 
     price = get_last_price(dex, symbol)
