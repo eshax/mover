@@ -19,9 +19,9 @@ class http:
     '''
 
     @staticmethod
-    def get(url):
+    def get(url, headers=None):
 
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=5, headers=headers)
 
         return r.status_code, r.content
 

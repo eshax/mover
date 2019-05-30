@@ -6,7 +6,7 @@ from services.jccdex import jccdex
 from services.coinbene import coinbene
 from services.coinw import coinw
 from services.huobi import huobi
-
+from services.bitz import bitz
 
 def get_depth(dex, symbol):
 
@@ -24,6 +24,9 @@ def get_depth(dex, symbol):
 
         if dex == 'huobi':
             depth, _ = huobi.get_depth(symbol)
+
+        if dex == 'bitz':
+            depth, _ = bitz.get_depth(symbol)
 
     except:
         pass
@@ -66,7 +69,8 @@ def bilateral(a_dex, b_dex, symbol, amount):
     if amount < depth[3] and amount < depth[5]:
         bp = depth[2]
         sp = depth[4]
-        x = (sp - bp) / ((sp + bp) / 2)
+        x = (sp - bp) / bp
+        # x = (sp - bp) / ((sp + bp) / 2)
         print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '%s-%s' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
@@ -78,7 +82,8 @@ def bilateral(a_dex, b_dex, symbol, amount):
     if amount < depth[7] and amount < depth[1]:
         bp = depth[6]
         sp = depth[0]
-        x = (sp - bp) / ((sp + bp) / 2)
+        x = (sp - bp) / bp
+        # x = (sp - bp) / ((sp + bp) / 2)
         print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '%s-%s' % (a_dex, b_dex), symbol, sp, bp, '%.2f' % x, '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
@@ -90,38 +95,51 @@ def bilateral(a_dex, b_dex, symbol, amount):
 
 while True:
 
-    bilateral('jccdex', 'coinbene', 'eth/usdt', 0)
-    bilateral('jccdex', 'coinbene', 'moac/usdt', 0)
-    bilateral('jccdex', 'coinbene', 'swtc/usdt', 0)
-    bilateral('jccdex', 'coinbene', 'xrp/usdt', 0)
+    print('---------------------------------------- Line')
+    k1 = jccdex.symbols.keys()
+    k2 = coinw.symbols.keys()
+    k3 = coinbene.symbols.keys()
+    k4 = bitz.symbols.keys()
+    k5 = huobi.symbols.keys()
 
-    bilateral('jccdex', 'coinw', 'moac/cnyt', 0)
-    bilateral('jccdex', 'coinw', 'swtc/cnyt', 0)
-    bilateral('jccdex', 'coinw', 'eth/cnyt', 0)
-    bilateral('jccdex', 'coinw', 'eth/usdt', 0)
-    bilateral('jccdex', 'coinw', 'xrp/cnyt', 0)
-    bilateral('jccdex', 'coinw', 'xrp/usdt', 0)
+    coins = k1 & k2
+    for coin in coins:
+        bilateral('jccdex', 'coinw', coin, 0)
 
-    bilateral('jccdex', 'huobi', 'eth/usdt', 0)
-    bilateral('jccdex', 'huobi', 'xrp/usdt', 0)
+    coins = k1 & k3
+    for coin in coins:
+        bilateral('jccdex', 'coinbene', coin, 0)
 
-    bilateral('coinw', 'coinbene', 'eth/usdt', 0)
-    bilateral('coinw', 'coinbene', 'xrp/usdt', 0)
-    bilateral('coinw', 'coinbene', 'eos/usdt', 0)
-    bilateral('coinw', 'coinbene', 'btc/usdt', 0)
-    bilateral('coinw', 'coinbene', 'bchabc/usdt', 0)
-    
-    bilateral('coinw', 'huobi', 'eth/usdt', 0)
-    bilateral('coinw', 'huobi', 'eos/usdt', 0)
-    bilateral('coinw', 'huobi', 'xrp/usdt', 0)
-    bilateral('coinw', 'huobi', 'btc/usdt', 0)
-    bilateral('coinw', 'huobi', 'bchabc/usdt', 0)
+    coins = k1 & k4
+    for coin in coins:
+        bilateral('jccdex', 'bitz', coin, 0)
 
-    bilateral('coinbene', 'huobi', 'eth/usdt', 0)
-    bilateral('coinbene', 'huobi', 'eos/usdt', 0)
-    bilateral('coinbene', 'huobi', 'xrp/usdt', 0)
-    bilateral('coinbene', 'huobi', 'btc/usdt', 0)
-    bilateral('coinbene', 'huobi', 'bchabc/usdt', 0)
+    coins = k1 & k5
+    for coin in coins:
+        bilateral('jccdex', 'huobi', coin, 0)
 
+    coins = k2 & k3
+    for coin in coins:
+        bilateral('coinw', 'coinbene', coin, 0)
+
+    coins = k2 & k4
+    for coin in coins:
+        bilateral('coinw', 'bitz', coin, 0)
+
+    coins = k2 & k5
+    for coin in coins:
+        bilateral('coinw', 'huobi', coin, 0)
+
+    coins = k3 & k4
+    for coin in coins:
+        bilateral('coinbene', 'bitz', coin, 0)
+
+    coins = k3 & k5
+    for coin in coins:
+        bilateral('coinbene', 'huobi', coin, 0)
+
+    coins = k4 & k5
+    for coin in coins:
+        bilateral('bitz', 'huobi', coin, 0)
 
     time.sleep(1)

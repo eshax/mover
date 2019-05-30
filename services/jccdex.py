@@ -56,6 +56,39 @@ class jccdex:
     account = "jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3"
     secret  = "ssbczL7WYpmG1mP1xPZsjDkWi6J6H"
 
+    symbols = {
+        'eth/cnyt'  : 'JETH-CNY',
+        'usdt/cnyt' : 'JUSDT-CNY',
+        'xrp/cnyt'  : 'JXRP-CNY',
+        'moac/cnyt' : 'JMOAC-CNY',
+        'swtc/cnyt' : 'SWT-CNY',
+        'jcc/cnyt'  : 'JJCC-CNY',
+        'vcc/cnyt'  : 'VCC-CNY',
+        'csp/cnyt'  : 'CSP-CNY',
+        'slash/cnyt'  : 'JSLASH-CNY',
+        'fst/cnyt'  : 'JFST-CNY',
+        'stm/cnyt'  : 'JSTM-CNY',
+        'call/cnyt'  : 'JCALL-CNY',
+
+        'eth/usdt'  : 'JETH-JUSDT',
+        'xrp/usdt'  : 'JXRP-JUSDT',
+        'moac/usdt' : 'JMOAC-JUSDT',
+        'swtc/usdt' : 'SWT-JUSDT',
+        'fst/usdt'  : 'JFST-JUSDT',
+
+        'moac/eth'  : 'JMOAC-JETH',
+        'swtc/eth'  : 'SWT-JETH',
+
+        'xrp/swtc'  : 'JXRP-SWT',
+        'moac/swtc' : 'JMOAC-SWT',
+        'jcc/swtc'  : 'JJCC-SWT',
+        'vcc/swtc'  : 'VCC-SWT',
+        'csp/swtc'  : 'CSP-SWT',
+        'slash/swtc'  : 'JSLASH-SWT',
+        'stm/swtc'  : 'JSTM-SWT',
+        'call/swtc'  : 'JCALL-SWT',
+
+    }
 
     '''
     查询 api
@@ -89,7 +122,7 @@ class jccdex:
         if code == 200:
             return content
 
-    symbols = [
+    symbols1 = [
         ('usdt', 'JUSDT'),
         ('moac', 'JMOAC'),
         ('fst', 'JFST'),
@@ -109,50 +142,7 @@ class jccdex:
 
     @staticmethod
     def get_symbol(symbol):
-
-        symbols = {
-            'usdt/cnyt' : 'JUSDT-CNY',
-
-            'moac/cnyt' : 'JMOAC-CNY',
-            'moac/eth'  : 'JMOAC-JETH',
-            'moac/usdt' : 'JMOAC-JUSDT',
-            'moac/swtc' : 'JMOAC-SWT',
-
-            'fst/cnyt'  : 'JFST-CNY',
-            'fst/usdt'  : 'JFST-JUSDT',
-
-            'xrp/cnyt'  : 'JXRP-CNY',
-            'xrp/usdt'  : 'JXRP-JUSDT',
-            'xrp/swtc'  : 'JXRP-SWT',
-
-            'csp/cnyt'  : 'CSP-CNY',
-            'csp/swtc'  : 'CSP-SWT',
-
-            'eth/cnyt'  : 'JETH-CNY',
-            'eth/usdt'  : 'JETH-JUSDT',
-
-            'swtc/cnyt' : 'SWT-CNY',
-            'swtc/usdt' : 'SWT-JUSDT',
-            'swtc/eth'  : 'SWT-JETH',
-
-            'jcc/cnyt'  : 'JJCC-CNY',
-            'jcc/swtc'  : 'JJCC-SWT',
-
-            'call/cnyt'  : 'JCALL-CNY',
-            'call/swtc'  : 'JCALL-SWT',
-
-            'slash/cnyt'  : 'JSLASH-CNY',
-            'slash/swtc'  : 'JSLASH-SWT',
-
-            'vcc/cnyt'  : 'VCC-CNY',
-            'vcc/swtc'  : 'VCC-SWT',
-
-            'stm/cnyt'  : 'JSTM-CNY',
-            'stm/swtc'  : 'JSTM-SWT',
-
-        }
-
-        return symbols.get(symbol)
+        return jccdex.symbols.get(symbol)
 
 
     '''
@@ -194,7 +184,7 @@ class jccdex:
     def get_balances_by_currency(currency):
         js = jccdex.get_balances()
 
-        for x, y in jccdex.symbols:
+        for x, y in jccdex.symbols1:
             if y in js and x == currency:
                 return float(js[y].get('free'))
 
