@@ -19,6 +19,35 @@ class coinw:
     api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
     secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
 
+    symbols = {
+
+        'btc/cnyt'  : 45,
+        'usdt/cnyt' : 59,
+        'eth/cnyt'  : 14,
+        'eos/cnyt'  : 29,
+        'ltc/cnyt'  : 3,
+        'trx/cnyt'  : 70,
+        'xrp/cnyt'  : 60,
+        'xmr/cnyt'  : 94,
+        'bchabc/cnyt'  : 69,
+        'dash/cnyt'  : 61,
+        'moac/cnyt' : 43,
+        'swtc/cnyt' : 47,
+        'ht/cnyt' : 91,
+        'bnb/cnyt' : 85,
+
+        'btc/usdt'  : 78,
+        'eth/usdt'  : 79,
+        'eos/usdt'  : 84,
+        'ltc/usdt'  : 86,
+        'trx/usdt'  : 98,
+        'xrp/usdt'  : 83,
+        'xmr/usdt'  : 113,
+        'bchabc/usdt'  : 99,
+        'dash/usdt'  : 82,
+
+    }
+
 
     '''
     签名
@@ -110,55 +139,7 @@ class coinw:
         # 73:HX/CNYT  76:BXA/CNYT  77:BTT/CNYT  78:BTC/USDT  79:ETH/USDT  80:QTUM/USDT  81:HC/USDT  82:DASH/USDT  83:XRP/USDT  84:EOS/USDT  85:BNB/CNYT  86:LTC/USDT  87:ADA/USDT  88:VET/USDT  89:ONG/CNYT
         # 91:HT/CNYT  92:FET/CNYT  93:VTHO/CNYT  94:XMR/CNYT  96:CELR/CNYT  97:VSYS/CNYT  98:TRX/USDT  99:BCHABC/USDT  102:YAX/CNYT  104:BAT/CNYT  105:ZEC/CNYT  107:DREP/CNYT  108:ATOM/CNYT  109:MATIC/CNYT
 
-        symbols = {
-
-            'usdt/cnyt' : 59,
-
-            'hc/cnyt'  : 5,
-            'hc/usdt'  : 81,
-
-            'dash/cnyt'  : 61,
-            'dash/usdt'  : 82,
-
-            'ltc/cnyt'  : 3,
-            'ltc/usdt'  : 86,
-
-            'ada/cnyt'  : 68,
-            'ada/usdt'  : 87,
-
-            'qtum/cnyt'  : 66,
-            'qtum/usdt'  : 80,
-
-            'vet/cnyt'  : 72,
-            'vet/usdt'  : 88,
-
-            'trx/cnyt'  : 70,
-            'trx/usdt'  : 98,
-
-            'bchabc/cnyt'  : 69,
-            'bchabc/usdt'  : 99,
-
-            'eth/cnyt'  : 14,
-            'eth/usdt'  : 79,
-
-            'moac/cnyt' : 43,
-
-            'swtc/cnyt' : 47,
-
-            'eos/cnyt'  : 29,
-            'eos/usdt'  : 84,
-
-            'xrp/cnyt'  : 60,
-            'xrp/usdt'  : 83,
-
-            'bchabc/usdt':99,
-            'bchabc/cnyt':69,
-
-            'btc/cnyt'  : 45,
-            'btc/usdt'  : 78,
-        }
-
-        return symbols.get(symbol)
+        return coinw.symbols.get(symbol)
 
 
 

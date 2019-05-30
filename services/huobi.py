@@ -16,6 +16,37 @@ TRADE_URL = "https://api.huobi.pro"
 
 class huobi:
 
+    symbols = {
+        "eth/usdt": "ethusdt",
+        "btc/usdt": "btcusdt",
+        "ltc/usdt": "ltcusdt",
+        "eos/usdt": "eosusdt",
+        "xrp/usdt": "xrpusdt",
+        "bchabc/usdt": "bchusdt",
+        "neo/usdt"   : "neousdt",
+        "xmr/usdt"   : "xmrusdt",
+        "etc/usdt"   : "etcusdt",
+        "dash/usdt"   : "dashusdt",
+        "trx/usdt"   : "trxusdt",
+        "ht/usdt"   : "htusdt",
+
+        "eth/btc"   : "ethbtc",
+        "xrp/btc"   : "xrpbtc",
+        "bchabc/btc"   : "bchbtc",
+        "ltc/btc"   : "ltcbtc",
+        "etc/btc"   : "etcbtc",
+        "eos/btc"   : "eosbtc",
+        "dash/btc"   : "dashbtc",
+        "xmr/btc"   : "xmrbtc",
+        "trx/btc"   : "trxbtc",
+        "ht/btc"   : "htbtc",
+
+        "eos/eth"   : "eos/eth",
+        "xmr/eth"   : "xmr/eth",
+        "trx/eth"   : "trx/eth",
+
+    }
+
 
     @staticmethod
     def http_get_request(url, params, add_to_headers=None):
@@ -163,13 +194,7 @@ class huobi:
 
     @staticmethod
     def get_symbol(symbol):
-        symbols = {
-            "eth/usdt": "ethusdt",
-            "btc/usdt": "btcusdt",
-            "ltc/usdt": "ltcusdt",
-            "eos/usdt": "eosusdt",
-        }
-        return symbols.get(symbol)
+        return huobi.symbols.get(symbol)
 
 
     @staticmethod

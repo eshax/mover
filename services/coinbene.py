@@ -30,6 +30,32 @@ class coinbene:
     market_url = "http://api.coinbene.com/v1/market/"
     trade_url = "http://api.coinbene.com/v1/trade/"
 
+
+    symbols = {
+        "btc/usdt"  : "btcusdt",
+        "eth/usdt"  : "ethusdt",
+        "eos/usdt"  : "eosusdt",
+        "bchabc/usdt"  : "bchabcusdt",
+        "trx/usdt"  : "trxusdt",
+        "xrp/usdt"  : "xrpusdt",
+        "ltc/usdt"  : "ltcusdt",
+        "neo/usdt"  : "neousdt",
+        "etc/usdt"  : "etcusdt",
+        "moac/usdt" : "moacusdt",
+        "swtc/usdt" : "swtcusdt", 
+
+        "eth/btc"   : "ethbtc",
+        "eos/btc"   : "eosbtc",
+        "trx/btc"   : "trxbtc",
+        "xrp/btc"   : "xrpbtc",
+        "ltc/btc"   : "ltcbtc",
+        "xmr/btc"   : "xmrbtc",
+        "neo/btc"   : "neobtc",
+        "etc/btc"   : "etcbtc",
+        
+    }
+
+
     #  生成签名sign
     @staticmethod
     def sign(**kwargs):
@@ -65,47 +91,7 @@ class coinbene:
 
     @staticmethod
     def get_symbol(symbol):
-
-        symbols = {
-            "btc/usdt"  : "btcusdt",
-
-            "moac/usdt" : "moacusdt",
-
-            "swtc/usdt" : "swtcusdt",
-
-            # ['btc/usdt', 'eth/btc', 'eth/usdt']
-            "eth/usdt"  : "ethusdt",
-            "eth/btc"   : "ethbtc",
-
-            # ['btc/usdt', 'eos/btc', 'eos/usdt']
-            "eos/btc"   : "eosbtc",
-            "eos/usdt"  : "eosusdt",
-
-            # ['btc/usdt', 'trx/btc', 'trx/usdt']
-            "trx/btc"   : "trxbtc",
-            "trx/usdt"  : "trxusdt",
-
-            # ['btc/usdt', 'xrp/btc', 'xrp/usdt']
-            "xrp/btc"   : "xrpbtc",
-            "xrp/usdt"  : "xrpusdt",
-
-            "neo/btc"   : "neobtc",
-            "neo/usdt"  : "neousdt",
-
-            "cnn/btc"   : "cnnbtc",
-            "cnn/usdt"  : "cnnusdt",
-
-            "ltc/btc"   : "ltcbtc",
-            "ltc/usdt"  : "ltcusdt",
-
-            "mxm/eth"   : "mxmeth",
-            "mxm/usdt"  : "mxmusdt",
-
-            "cs/eth"   : "cseth",
-            "cs/usdt"  : "csusdt",
-        }
-
-        return symbols.get(symbol)
+        return coinbene.symbols.get(symbol)
 
     '''
     签名
@@ -467,7 +453,6 @@ if __name__ == "__main__":
         triangle.buy_buy_sell(['btc/usdt', 'trx/btc', 'trx/usdt'], 0.0002, 0.4)
         triangle.buy_buy_sell(['btc/usdt', 'xrp/btc', 'xrp/usdt'], 0.0002, 0.4)
         triangle.buy_buy_sell(['btc/usdt', 'neo/btc', 'neo/usdt'], 0.0002, 0.4)
-        triangle.buy_buy_sell(['btc/usdt', 'cnn/btc', 'cnn/usdt'], 0.0002, 0.4)
         triangle.buy_buy_sell(['btc/usdt', 'ltc/btc', 'ltc/usdt'], 0.0002, 0.4)
 
         print ('# buy sell sell')
@@ -477,7 +462,6 @@ if __name__ == "__main__":
         triangle.buy_sell_sell(['trx/usdt', 'trx/btc', 'btc/usdt'], 5.8, 0.4)
         triangle.buy_sell_sell(['xrp/usdt', 'xrp/btc', 'btc/usdt'], 4.5, 0.4)
         triangle.buy_sell_sell(['neo/usdt', 'neo/btc', 'btc/usdt'], 0.16, 0.4)
-        triangle.buy_sell_sell(['cnn/usdt', 'cnn/btc', 'btc/usdt'], 10000, 0.4)
         triangle.buy_sell_sell(['ltc/usdt', 'ltc/btc', 'btc/usdt'], 0.018, 0.4)
 
         time.sleep(2)
