@@ -7,6 +7,8 @@ from services.jccdex import jccdex
 
 prices = {}
 
+
+
 '''
 查询最新的价格
 '''
@@ -16,6 +18,7 @@ def get_last_price(dex, symbol):
         return jccdex.get_last_price(symbol)
 
     return None
+
 
 
 '''
@@ -40,7 +43,7 @@ def order(dex, symbol, price, point, amount):
                 break
         except:
             pass
-        time.sleep(1)
+        time.sleep(2)
 
     # get sequence
     while True:
@@ -53,7 +56,7 @@ def order(dex, symbol, price, point, amount):
                 break
         except:
             pass
-        time.sleep(1)
+        time.sleep(2)
 
     # sell
     while True:
@@ -63,9 +66,13 @@ def order(dex, symbol, price, point, amount):
                 break
         except:
             pass
-        time.sleep(1)
+        time.sleep(2)
 
     print ()
+
+    time.sleep(10)
+
+
 
 
 '''
@@ -84,17 +91,23 @@ def scalp(dex, symbol, point, amount):
         prices[symbol] = 0.0
 
     if price > (prices[symbol] + point) or price < (prices[symbol] - point):
+
+        for n in range(-10, 10):
+            if int(point * (10 ** n)) > 0:
+                break
+
+        price = round(float(int(price * (10 ** n))) / (10 ** n), n)
+
         order(dex, symbol, price, point, amount)
         prices[symbol] = price
 
-        time.sleep(10)
 
 
 
 while True:
 
     try:
-        scalp('jccdex', 'swtc/cnyt', 0.00001, 10)
+        scalp('jccdex', 'swtc/cnyt', 0.00001, 100)
     except:
         time.sleep(60)
         
