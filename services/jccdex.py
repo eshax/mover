@@ -294,13 +294,15 @@ class jccdex:
 
         url = '/exchange/sign_order'
         js = jccdex.exchange(url, data = data)
-        js = json.loads(js)
-        print(js.get('msg'))
-
-        if 'data' in js:
-            hash = js.get('data').get('hash')
-            return {'sequence': sequence, 'hash': hash, 'code': 200}
-        else:
+        try:
+            js = json.loads(js)
+            print(js.get('msg'))
+            if 'data' in js:
+                hash = js.get('data').get('hash')
+                return {'sequence': sequence, 'hash': hash, 'code': 200}
+            else:
+                return {'sequence': sequence, 'hash': '', 'code': 400}
+        except:
             return {'sequence': sequence, 'hash': '', 'code': 400}
 
 
@@ -391,6 +393,39 @@ class jccdex:
 
         return depth, js
 
+
+
+    '''
+    获取最新成交价
+    '''
+
+    @staticmethod
+    def get_last_price(symbol):
+
+        js = {}
+
+        url = '/info/history/%s/normal' % jccdex.get_symbol(symbol)
+
+        try:
+
+            js = json.loads(jccdex.info(url))
+
+            data = []
+
+            if 'data' in js:
+                if len(js.get('data')):
+                    return js.get('data')[0][2]
+
+        except:
+            pass
+
+        return None
+
+
+
+'''
+单边三角形
+'''
 
 class triangle:
 
@@ -563,6 +598,7 @@ class triangle:
         time.sleep(10)
 
         return True
+
 
 
 if __name__ == "__main__":
