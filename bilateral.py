@@ -12,14 +12,17 @@ def get_depth(dex, symbol):
 
     depth = {}
 
-    if dex == 'jccdex':
-        depth, _ = jccdex.get_depth(symbol)
+    try:
+        if dex == 'jccdex':
+            depth, _ = jccdex.get_depth(symbol)
 
-    if dex == 'coinbene':
-        depth = coinbene.get_depth(symbol)
+        if dex == 'coinbene':
+            depth = coinbene.get_depth(symbol)
 
-    if dex == 'coinw':
-        depth = coinw.get_depth(symbol)
+        if dex == 'coinw':
+            depth = coinw.get_depth(symbol)
+    except:
+        pass
 
     return depth
 
@@ -86,5 +89,6 @@ while True:
     bilateral('jccdex', 'coinbene', 'eth/usdt', 0.02)
     bilateral('jccdex', 'coinbene', 'moac/usdt', 10)
     bilateral('jccdex', 'coinw', 'moac/cnyt', 5)
+    bilateral('jccdex', 'coinw', 'swtc/usdt', 5)
 
     time.sleep(1)
