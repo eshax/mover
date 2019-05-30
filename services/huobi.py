@@ -92,7 +92,7 @@ class huobi:
 
         params_to_sign['Signature'] = huobi.createSign(params_to_sign, method, 'api.huobi.pro', request_path, SECRET_KEY)
 
-        url = host_url + request_path + '?' + urllib.urlencode(params_to_sign)
+        url = host_url + request_path + '?' + urllib.parse.urlencode(params_to_sign)
         return huobi.http_post_request(url, params)
 
 
@@ -155,7 +155,7 @@ class huobi:
         except:
             pass
 
-        # return js 
+        # return js
 
 
     @staticmethod
