@@ -12,14 +12,17 @@ def get_depth(dex, symbol):
 
     depth = {}
 
-    if dex == 'jccdex':
-        depth, _ = jccdex.get_depth(symbol)
+    try:
+        if dex == 'jccdex':
+            depth, _ = jccdex.get_depth(symbol)
 
-    if dex == 'coinbene':
-        depth = coinbene.get_depth(symbol)
+        if dex == 'coinbene':
+            depth = coinbene.get_depth(symbol)
 
-    if dex == 'coinw':
-        depth = coinw.get_depth(symbol)
+        if dex == 'coinw':
+            depth = coinw.get_depth(symbol)
+    except:
+        pass
 
     return depth
 

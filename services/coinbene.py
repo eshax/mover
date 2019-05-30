@@ -72,6 +72,8 @@ class coinbene:
             "moac/usdt" : "moacusdt",
             "swtc/usdt" : "swtcusdt", 
 
+            "swtc/usdt" : "swtcusdt",
+
             # ['btc/usdt', 'eth/btc', 'eth/usdt']
             "eth/usdt"  : "ethusdt",
             "eth/btc"   : "ethbtc",
