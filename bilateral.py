@@ -83,8 +83,23 @@ def bilateral(a_dex, b_dex, symbol, amount):
 
 while True:
 
-    bilateral('jccdex', 'coinbene', 'eth/usdt', 0.02)
-    bilateral('jccdex', 'coinbene', 'moac/usdt', 10)
-    bilateral('jccdex', 'coinw', 'moac/cnyt', 5)
+    bilateral('jccdex', 'coinbene', 'eth/usdt', 0)
+    bilateral('jccdex', 'coinbene', 'moac/usdt', 0)
+    bilateral('jccdex', 'coinbene', 'swtc/usdt', 0)
+    bilateral('jccdex', 'coinbene', 'xrp/usdt', 0)
+
+    bilateral('jccdex', 'coinw', 'moac/cnyt', 0)
+    bilateral('jccdex', 'coinw', 'swtc/cnyt', 0)
+    bilateral('jccdex', 'coinw', 'eth/cnyt', 0)
+    bilateral('jccdex', 'coinw', 'eth/usdt', 0)
+    bilateral('jccdex', 'coinw', 'xrp/cnyt', 0)
+    bilateral('jccdex', 'coinw', 'xrp/usdt', 0)
+
+
+    bilateral('coinw', 'coinbene', 'eth/usdt', 0)
+    bilateral('coinw', 'coinbene', 'xrp/usdt', 0)
+    bilateral('coinw', 'coinbene', 'eos/usdt', 0)
+    bilateral('coinw', 'coinbene', 'btc/usdt', 0)
+    bilateral('coinw', 'coinbene', 'bchabc/usdt', 0)
 
     time.sleep(1)

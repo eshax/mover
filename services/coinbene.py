@@ -70,6 +70,7 @@ class coinbene:
             "btc/usdt"  : "btcusdt",
 
             "moac/usdt" : "moacusdt",
+            "swtc/usdt" : "swtcusdt", 
 
             # ['btc/usdt', 'eth/btc', 'eth/usdt']
             "eth/usdt"  : "ethusdt",
@@ -101,6 +102,9 @@ class coinbene:
 
             "cs/eth"   : "cseth",
             "cs/usdt"  : "csusdt",
+
+            "bchabc/usdt"  : "bchabcusdt",
+            
         }
 
         return symbols.get(symbol)
