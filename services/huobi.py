@@ -99,7 +99,7 @@ class huobi:
     @staticmethod
     def createSign(pParams, method, host_url, request_path, secret_key):
         sorted_params = sorted(pParams.items(), key=lambda d: d[0], reverse=False)
-        encode_params = urllib.urlencode(sorted_params)
+        encode_params = urllib.parse.urlencode(sorted_params)
         payload = [method, host_url, request_path, encode_params]
         payload = '\n'.join(payload)
         payload = payload.encode(encoding='UTF8')
