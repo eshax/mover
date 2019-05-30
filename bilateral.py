@@ -89,6 +89,6 @@ while True:
     bilateral('jccdex', 'coinbene', 'eth/usdt', 0.02)
     bilateral('jccdex', 'coinbene', 'moac/usdt', 10)
     bilateral('jccdex', 'coinw', 'moac/cnyt', 5)
-    bilateral('jccdex', 'coinw', 'swtc/usdt', 5)
+    bilateral('jccdex', 'coinbene', 'swtc/usdt', 5000)
 
     time.sleep(1)
