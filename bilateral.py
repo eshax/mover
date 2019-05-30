@@ -102,13 +102,26 @@ while True:
     bilateral('jccdex', 'coinw', 'xrp/cnyt', 0)
     bilateral('jccdex', 'coinw', 'xrp/usdt', 0)
 
+    bilateral('jccdex', 'huobi', 'eth/usdt', 0)
+    bilateral('jccdex', 'huobi', 'xrp/usdt', 0)
 
     bilateral('coinw', 'coinbene', 'eth/usdt', 0)
     bilateral('coinw', 'coinbene', 'xrp/usdt', 0)
     bilateral('coinw', 'coinbene', 'eos/usdt', 0)
     bilateral('coinw', 'coinbene', 'btc/usdt', 0)
     bilateral('coinw', 'coinbene', 'bchabc/usdt', 0)
+    
+    bilateral('coinw', 'huobi', 'eth/usdt', 0)
+    bilateral('coinw', 'huobi', 'eos/usdt', 0)
+    bilateral('coinw', 'huobi', 'xrp/usdt', 0)
+    bilateral('coinw', 'huobi', 'btc/usdt', 0)
+    bilateral('coinw', 'huobi', 'bchabc/usdt', 0)
 
-    bilateral('jccdex', 'huobi', 'eth/usdt', 0.02)
+    bilateral('coinbene', 'huobi', 'eth/usdt', 0)
+    bilateral('coinbene', 'huobi', 'eos/usdt', 0)
+    bilateral('coinbene', 'huobi', 'xrp/usdt', 0)
+    bilateral('coinbene', 'huobi', 'btc/usdt', 0)
+    bilateral('coinbene', 'huobi', 'bchabc/usdt', 0)
+
 
     time.sleep(1)

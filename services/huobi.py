@@ -168,6 +168,8 @@ class huobi:
             "btc/usdt": "btcusdt",
             "ltc/usdt": "ltcusdt",
             "eos/usdt": "eosusdt",
+            "xrp/usdt": "xrpusdt",
+            "bchabc/usdt": "bchusdt",
         }
         return symbols.get(symbol)
 
