@@ -26,19 +26,21 @@ class huobi:
         if add_to_headers:
             headers.update(add_to_headers)
         try:
-            postdata = urllib.urlencode(params)
+            postdata = urllib.parse.urlencode(params)
             response = requests.get(url, postdata, headers=headers, timeout=5)
             try:
 
                 if response.status_code == 200:
                     return response.json()
                 else:
+                    print(response.json())
                     return
             except BaseException as e:
                 print("httpGet failed, detail is:%s,%s" %(response.text,e))
                 return
-        except:
-            pass
+        except BaseException as e:
+            print("httpGet failed, detail is:%s,%s" %(response.text,e))
+            return
 
 
     @staticmethod
@@ -129,7 +131,7 @@ class huobi:
 
         try:
             js = huobi.http_get_request(url, params)
-            if js.has_key('tick'):
+            if 'tick' in js:
                 bids = js['tick']['bids']
                 bids.sort(key = lambda x: -float(x[0]))
                 for b in bids[:5]:
@@ -139,7 +141,8 @@ class huobi:
                 asks.sort(key = lambda x: float(x[0]))
                 for a in asks[:5]:
                     depth['asks'].append({ 'price': float(a[0]), 'amount': float(a[1]) })
-        except:
+        except BaseException as e:
+            print("get depth failed, detail is:%s,%s" %(response.text,e))
             pass
 
         return depth, js
@@ -180,14 +183,6 @@ class huobi:
 
 
 if __name__ == '__main__':
-
-    js = huobi.get_symbols()
-
-    for o in js['data']:
-        if 'eth' in o['symbol']:
-            #print o['symbol']
-            pass
-
 
     js, _ = huobi.get_depth('eth/usdt', 'step0')
     print (js)
