@@ -93,6 +93,9 @@ def scalp(dex, symbol, point, amount):
 
 while True:
 
-    scalp('jccdex', 'swtc/cnyt', 0.0001, 10)
-
+    try:
+        scalp('jccdex', 'swtc/cnyt', 0.00001, 10)
+    except:
+        time.sleep(60)
+        
     time.sleep(1)
