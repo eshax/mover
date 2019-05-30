@@ -5,7 +5,7 @@ import time
 from services.jccdex import jccdex
 from services.coinbene import coinbene
 from services.coinw import coinw
-
+from services.huobi import huobi
 
 
 def get_depth(dex, symbol):
@@ -21,6 +21,10 @@ def get_depth(dex, symbol):
 
         if dex == 'coinw':
             depth = coinw.get_depth(symbol)
+
+        if dex == 'huobi':
+            depth, _ = huobi.get_depth(symbol)
+
     except:
         pass
 
@@ -104,5 +108,7 @@ while True:
     bilateral('coinw', 'coinbene', 'eos/usdt', 0)
     bilateral('coinw', 'coinbene', 'btc/usdt', 0)
     bilateral('coinw', 'coinbene', 'bchabc/usdt', 0)
+
+    bilateral('jccdex', 'huobi', 'eth/usdt', 0.02)
 
     time.sleep(1)
