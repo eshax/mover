@@ -70,7 +70,7 @@ def order(dex, symbol, price, point, amount):
 
     print ()
 
-    time.sleep(10)
+    time.sleep(60)
 
 
 
@@ -107,8 +107,8 @@ def scalp(dex, symbol, point, amount):
 while True:
 
     try:
-        scalp('jccdex', 'swtc/cnyt', 0.00001, 100)
+        scalp('jccdex', 'swtc/cnyt', 0.00002, 1000)
     except:
         time.sleep(60)
-        
+
     time.sleep(1)
