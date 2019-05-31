@@ -70,27 +70,27 @@ def bilateral(a_dex, b_dex, symbol, amount):
         bp = depth[2]
         sp = depth[4]
         x = (sp - bp) / bp
+        ma = min(depth[3], depth[5])            # 盘口最小挂单
+        y = round((sp * ma) - (bp * ma), 2)     # 盘口利润
         # x = (sp - bp) / ((sp + bp) / 2)
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '%s-%s' % (a_dex, b_dex), symbol, bp, sp, '%.2f' % x, '+' if x > 0.01 else '')
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell    ', '%20s' % ('%s-%s' % (a_dex, b_dex)), '%14s' % symbol, '%10s' % round(bp, 5), '%10s' % round(sp, 5), '%10s' % round(ma, 5), '%10s' % y, '%10s' % ('%.2f%%' % (x * 100.0)), '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
             # order(a_dex, 'buy', symbol, buy_price, amount)
             # order(b_dex, 'sell', symbol, sell_price, amount)
-    # else:
-    #     print (time.strftime("%Y-%m-%d %H:%M:%S"), 'buy-sell', '%s-%s' % (a_dex, b_dex), symbol, 'low on amount', amount, '>', depth[3], '|', depth[5])
 
     if amount < depth[7] and amount < depth[1]:
         bp = depth[6]
         sp = depth[0]
         x = (sp - bp) / bp
+        ma = min(depth[7], depth[1])            # 盘口最小挂单
+        y = round((sp * ma) - (bp * ma), 2)     # 盘口利润
         # x = (sp - bp) / ((sp + bp) / 2)
-        print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '%s-%s' % (a_dex, b_dex), symbol, sp, bp, '%.2f' % x, '+' if x > 0.01 else '')
+        print (time.strftime("%Y-%m-%d %H:%M:%S"), '    sell-buy', '%20s' % ('%s-%s' % (a_dex, b_dex)), '%14s' % symbol, '%10s' % round(sp, 5), '%10s' % round(bp, 5), '%10s' % round(ma, 5), '%10s' % y, '%10s' % ('%.2f%%' % (x * 100.0)), '+' if x > 0.01 else '')
         if (sp - bp) / ((sp + bp) / 2) > 0.01:
             pass
             # order(b_dex, 'buy', symbol, buy_price, amount)
             # order(a_dex, 'sell', symbol, sell_price, amount)
-    # else:
-    #     print (time.strftime("%Y-%m-%d %H:%M:%S"), 'sell-buy', '%s-%s' % (a_dex, b_dex), symbol, 'low amount', amount, '>', depth[7], '|', depth[1])
 
 
 while True:
@@ -110,5 +110,5 @@ while True:
     for x, y, a, b in data:
     	for c in (a & b):
             bilateral(x, y, c, 0)
-
+            print()
             time.sleep(1)
