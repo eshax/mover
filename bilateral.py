@@ -96,50 +96,19 @@ def bilateral(a_dex, b_dex, symbol, amount):
 while True:
 
     print('---------------------------------------- Line')
-    k1 = jccdex.symbols.keys()
-    k2 = coinw.symbols.keys()
-    k3 = coinbene.symbols.keys()
-    k4 = bitz.symbols.keys()
-    k5 = huobi.symbols.keys()
 
-    coins = k1 & k2
-    for coin in coins:
-        bilateral('jccdex', 'coinw', coin, 0)
+    data = [
+        ('jccdex', jccdex.symbols.keys()),
+        ('coinw', coinw.symbols.keys()),
+        ('coinbene', coinbene.symbols.keys()),
+        ('bitz', bitz.symbols.keys()),
+        ('huobi', huobi.symbols.keys()),
+    ]
 
-    coins = k1 & k3
-    for coin in coins:
-        bilateral('jccdex', 'coinbene', coin, 0)
+    data = [(x, y, a, b) for x, a in data for y, b in data if y > x]
 
-    coins = k1 & k4
-    for coin in coins:
-        bilateral('jccdex', 'bitz', coin, 0)
+    for x, y, a, b in data:
+    	for c in (a & b):
+            bilateral(x, y, c, 0)
 
-    coins = k1 & k5
-    for coin in coins:
-        bilateral('jccdex', 'huobi', coin, 0)
-
-    coins = k2 & k3
-    for coin in coins:
-        bilateral('coinw', 'coinbene', coin, 0)
-
-    coins = k2 & k4
-    for coin in coins:
-        bilateral('coinw', 'bitz', coin, 0)
-
-    coins = k2 & k5
-    for coin in coins:
-        bilateral('coinw', 'huobi', coin, 0)
-
-    coins = k3 & k4
-    for coin in coins:
-        bilateral('coinbene', 'bitz', coin, 0)
-
-    coins = k3 & k5
-    for coin in coins:
-        bilateral('coinbene', 'huobi', coin, 0)
-
-    coins = k4 & k5
-    for coin in coins:
-        bilateral('bitz', 'huobi', coin, 0)
-
-    time.sleep(1)
+            time.sleep(1)
