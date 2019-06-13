@@ -18,6 +18,8 @@ from utils.http import http
 
 class coinbene:
 
+    eth = '0x925c59092c14c9a5bc0e0f869b03b64901169ebc'
+
     api_url     = 'https://api.coinbene.com'
 
     api_key     = '24f2cba00fc8a3396210369746863282'
@@ -221,10 +223,15 @@ class coinbene:
             "symbol": coinbene.get_symbol(symbol)
         }
         url = coinbene.trade_url + "order/place"
-        js = coinbene.http_post_sign(url, o)
-        print (js)
-        return js
-
+        try:
+            js = coinbene.http_post_sign(url, o)
+            print(js)
+            if js.get('status') == 'ok':
+                return {'code': 200}
+            else:
+                return {'code': 400}
+        except:
+            return {'code': 400}
 
 
     '''
@@ -262,6 +269,23 @@ class coinbene:
         url = coinbene.trade_url + "order/cancel"
         return coinbene.http_post_sign(url, o)
 
+
+    #  提现
+    def withdraw(symbol, amount, wallet):
+        """
+        以字典形式传参
+        apiid,timestamp,secret,orderid
+        """
+        o = {
+            "apiid": coinbene.api_key,
+            "secret": coinbene.api_secret,
+            'asset': symbol,
+            'amount': amount,
+            'address': wallet,
+            'timestamp': coinbene.create_timestamp()
+        }
+        url = coinbene.trade_url + "withdraw/apply"
+        return coinbene.http_post_sign(url, o)
 
 class triangle:
 

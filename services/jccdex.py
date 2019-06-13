@@ -30,14 +30,16 @@ sdk:
 class jccdex:
 
     api = {
-        "exHosts": ["ewdjbbl8jgf.jccdex.cn",
-                    "e5e9637c2fa.jccdex.cn",
-                    "e9joixcvsdvi4sf.jccdex.cn",
-                    "eaf28bebdff.jccdex.cn",
-                    "ejid19dcf155a0.jccdex.cn",
-                    "ejii363fa7e9a6.jccdex.cn",
-                    "ejin22b16fbe3e.jccdex.cn",
-                    "ejio68dd7d047f.jccdex.cn"],
+        "exHosts": [
+                    "ewdjbbl8jgf.jccdex.cn",
+                    # "e5e9637c2fa.jccdex.cn",
+                    # "e9joixcvsdvi4sf.jccdex.cn",
+                    # "eaf28bebdff.jccdex.cn",
+                    # "ejid19dcf155a0.jccdex.cn",
+                    # "ejii363fa7e9a6.jccdex.cn",
+                    # "ejin22b16fbe3e.jccdex.cn",
+                    # "ejio68dd7d047f.jccdex.cn"
+                    ],
         "infoHosts": [
                     "i3b44eb75ef.jccdex.cn",
                     "i059e8792d5.jccdex.cn",
@@ -53,8 +55,10 @@ class jccdex:
     }
 
     ex_api      = 'https://ewdjbbl8jgf.jccdex.cn'
-    account = "jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3"
-    secret  = "ssbczL7WYpmG1mP1xPZsjDkWi6J6H"
+    # account = "jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3"
+    # secret  = "ssbczL7WYpmG1mP1xPZsjDkWi6J6H"
+    account = "jKWx6pWumUv7grbTK8CBUpAk4dTCDASzGg"
+    secret  = "snifFnwDi8siekkKFmXrM5zRtPjxM"
 
     symbols = {
         'eth/cnyt'  : 'JETH-CNY',
@@ -88,6 +92,12 @@ class jccdex:
         'stm/swtc'  : 'JSTM-SWT',
         'call/swtc'  : 'JCALL-SWT',
 
+    }
+
+    tokens = {
+        'ETH' : '0x0b2d6002ddb979521443ef0eccb6da4a915f98ef',
+        'MOAC' : '0x0b2d6002ddb979521443ef0eccb6da4a915f98ef',
+        'SWTC' : 'jaSmctLLJhTaYbPA2bFxU9T5AFrroZFWQ3'
     }
 
     '''
@@ -275,9 +285,9 @@ class jccdex:
         hash = serial.from_json(o).hash(prefix)
         o['TxnSignature'] = w.sign(hash)
 
-        print(o)
+        # print(o)
         blob = serial.from_json(o).to_hex()
-        print(blob)
+        # print(blob)
 
         data = {}
         data['sign'] = blob
@@ -324,7 +334,7 @@ class jccdex:
         blob = serial.from_json(o).to_hex()
         print(blob)
 
-        url = 'http://' + random.choice(jccdex.api['exHosts']) + '/exchange/sign_cancel_order'
+        url = 'https://' + random.choice(jccdex.api['exHosts']) + '/exchange/sign_cancel_order'
 
         data = {}
         data['sign'] = blob

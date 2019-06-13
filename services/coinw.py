@@ -14,10 +14,18 @@ from utils.http import http
 
 class coinw:
 
+    eth = '0x75e988cc64fec947b41d9b034f9f4484a4756125'
+
     api_url     = 'http://api.coinw.ai/appApi.html?'
 
     api_key     = '1b3342b5-8baf-4669-a1bc-9047ad8b720a'
     secret_key  = '5RAIGRUWKDS2I9VAYI2I4QSZ4HZAIVETUXE1'
+
+    symbol_code = {
+        'swtc' : 45,
+        'eth' : 12,
+        'moac' : 42
+    }
 
     symbols = {
 
@@ -91,7 +99,7 @@ class coinw:
 
     @staticmethod
     def post(action, param):
-
+        # print(coinw.api_url + action + coinw.get_sign(param))
         code, content = http.post( coinw.api_url + action + coinw.get_sign(param) )
 
         if code == 200:
@@ -173,6 +181,54 @@ class coinw:
             print (err)
 
         return depth
+
+    '''
+    挂单
+    '''
+
+    @staticmethod
+    def order(type, symbol, price, amount):
+
+        symbol = coinw.get_symbol(symbol)
+        action = 'action=trade&'
+        param = 'symbol=%s&type=%s&amount=%s&price=%s' % (symbol, 0 if type == 'buy' else 1, amount, price)
+
+        """
+        type:    交易类型  buy(买),  sell(卖)
+        symbol:  统一的货币对 (swtc/cnyt)
+        price:   交易金额
+        amount:  交易数量
+        """
+        try:
+            js = json.loads(coinw.post(action, param))
+            print(js.get('msg'))
+            if js.get('code') == 200:
+                return {'code': 200}
+            else:
+                return {'code': 400}
+        except:
+            return {'code': 400}
+
+    '''
+    提现
+    '''
+
+    @staticmethod
+    def withdraw(symbol, amount, wallet):
+        symbol = coinw.symbol_code[symbol]
+        action = 'action=withdraw&'
+        param = 'symbol=%s&amount=%s&withdrawaddress=%s' % (symbol, amount, wallet)
+        print(param)
+        # try:
+        #     js = json.loads(coinw.post(action, param))
+        #     print(js.get('msg'))
+        #     if 'code' in js:
+        #         hash = js.get('data')
+        #         return {'hash': hash, 'code': 200}
+        #     else:
+        #         return {'hash': '', 'code': 400}
+        # except:
+        #     return {'hash': '', 'code': 400}
 
 
 

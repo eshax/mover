@@ -7,6 +7,8 @@
 import os, sys, time, json, pymongo, redis
 import mysql.connector.pooling
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from services.coinw import coinw
 from services.jccdex import jccdex
 from services.huobi import huobi
